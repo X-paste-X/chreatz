@@ -1,0 +1,1936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHREATZ — Roblox Script Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070f;--bg2:#0c0c18;--bg3:#10101f;--bg4:#141428;
+  --s:rgba(255,255,255,0.04);--s2:rgba(255,255,255,0.07);--s3:rgba(255,255,255,0.11);
+  --b:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.12);
+  --a:#7857ff;--a2:#a78bfa;--a3:#c4b5fd;--ag:rgba(120,87,255,0.3);
+  --gr:#0fd998;--grd:rgba(15,217,152,0.1);
+  --yl:#f5a623;--yld:rgba(245,166,35,0.1);
+  --rd:#ff5c5c;--bl:#5ca8ff;
+  --t:#f0f0ff;--t2:#a8a8c0;--mu:#58586e;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 1100px 800px at -10% -15%,rgba(120,87,255,.15) 0%,transparent 55%),radial-gradient(ellipse 900px 700px at 110% 110%,rgba(15,217,152,.08) 0%,transparent 50%),radial-gradient(ellipse 600px 400px at 50% 50%,rgba(120,87,255,.04) 0%,transparent 70%)}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:99px}
+
+/* LOADING SCREEN */
+#loading-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .4s ease}
+#loading-screen.hidden{opacity:0;pointer-events:none}
+.load-logo{font-size:1.6rem;font-weight:800;letter-spacing:-.5px}
+.load-logo em{font-style:normal;color:var(--a2)}
+.load-bar-wrap{width:180px;height:3px;background:var(--s2);border-radius:99px;overflow:hidden}
+.load-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:99px;transition:width .3s ease;animation:loadAnim 1.4s ease forwards}
+@keyframes loadAnim{0%{width:0%}60%{width:70%}100%{width:100%}}
+.load-txt{font-size:.7rem;color:var(--mu)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(12px,3vw,44px);background:rgba(7,7,15,0.85);backdrop-filter:blur(28px) saturate(1.5);border-bottom:1px solid var(--b)}
+.logo{font-size:1.18rem;font-weight:800;letter-spacing:-0.5px;cursor:pointer;user-select:none;display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--a2);box-shadow:0 0 10px var(--ag);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.logo em{font-style:normal;color:var(--a2)}
+.nav-mid{display:flex;gap:2px}
+.ntab{color:var(--mu);font-size:0.77rem;font-weight:600;padding:5px 11px;border-radius:7px;border:none;background:none;transition:all .15s;letter-spacing:.2px}
+.ntab:hover{color:var(--t2);background:var(--s)}
+.ntab.on{color:var(--a3);background:rgba(120,87,255,.1)}
+.nav-r{display:flex;gap:8px;align-items:center}
+.add-btn{display:flex;align-items:center;gap:5px;background:rgba(120,87,255,.12);border:1px solid rgba(120,87,255,.28);color:var(--a3);padding:6px 13px;border-radius:8px;font-size:0.77rem;font-weight:700;transition:all .2s}
+.add-btn:hover{background:var(--a);border-color:var(--a);color:#fff;transform:translateY(-1px)}
+.dbtn{display:flex;align-items:center;gap:6px;background:rgba(88,101,242,.1);border:1px solid rgba(88,101,242,.22);color:#7d8fff;padding:6px 13px;border-radius:8px;font-size:0.77rem;font-weight:700;transition:all .2s}
+.dbtn:hover{background:rgba(88,101,242,.25);color:#fff;transform:translateY(-1px)}
+
+/* WRAP */
+.w{max-width:1360px;margin:0 auto;padding:0 clamp(12px,3vw,44px);position:relative;z-index:1}
+main{padding-top:56px}
+
+/* HERO */
+.hero{padding:70px 0 50px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(120,87,255,.1);border:1px solid rgba(120,87,255,.2);color:var(--a3);font-size:0.67rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:99px;margin-bottom:22px}
+.pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gr);box-shadow:0 0 8px var(--gr);animation:pulse 1.8s infinite}
+.hero h1{font-size:clamp(2rem,4.5vw,3.8rem);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:14px}
+.hero h1 .g{background:linear-gradient(110deg,var(--a) 0%,var(--a2) 40%,var(--gr) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--t2);font-size:0.93rem;max-width:440px;margin:0 auto 36px;line-height:1.7}
+.hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.h-btn-p{background:var(--a);border:none;color:#fff;padding:11px 24px;border-radius:10px;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;box-shadow:0 0 24px var(--ag);transition:all .2s}
+.h-btn-p:hover{background:#9070ff;transform:translateY(-2px);box-shadow:0 4px 30px var(--ag)}
+.h-btn-s{background:var(--s2);border:1px solid var(--b2);color:var(--t2);padding:11px 24px;border-radius:10px;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;transition:all .2s}
+.h-btn-s:hover{color:var(--t);border-color:rgba(255,255,255,.2);transform:translateY(-2px)}
+
+/* SEARCH */
+.srch-wrap{max-width:620px;margin:0 auto 12px;position:relative}
+.srch-wrap input{width:100%;padding:14px 46px 14px 46px;background:var(--bg3);border:1.5px solid var(--b2);border-radius:13px;color:var(--t);font-family:'JetBrains Mono',monospace;font-size:0.84rem;outline:none;transition:all .22s}
+.srch-wrap input::placeholder{color:var(--mu)}
+.srch-wrap input:focus{border-color:var(--a);background:var(--bg4);box-shadow:0 0 0 4px rgba(120,87,255,.1)}
+.si{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--mu);pointer-events:none}
+.clr{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--s2);border:none;color:var(--mu);width:24px;height:24px;border-radius:5px;font-size:0.8rem;display:none;align-items:center;justify-content:center;transition:all .15s}
+.clr.v{display:flex}
+.clr:hover{color:var(--t);background:var(--s3)}
+.snote{text-align:center;color:var(--mu);font-size:0.73rem;margin-bottom:24px;min-height:16px}
+
+/* STATS */
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.stat-box{background:var(--s);border:1px solid var(--b);border-radius:11px;padding:13px 22px;text-align:center;backdrop-filter:blur(8px)}
+.stat-n{font-size:1.4rem;font-weight:800;letter-spacing:-.8px}
+.stat-n.p{color:var(--a2)}.stat-n.g{color:var(--gr)}.stat-n.y{color:var(--yl)}.stat-n.b{color:var(--bl)}
+.stat-l{font-size:0.67rem;color:var(--mu);margin-top:2px;letter-spacing:.3px}
+
+/* RECS */
+.rec-wrap{margin-bottom:36px}
+.sec-label{font-size:0.8rem;font-weight:700;color:var(--a3);margin-bottom:12px;display:flex;align-items:center;gap:7px;letter-spacing:.2px}
+.rec-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.rec-row::-webkit-scrollbar{display:none}
+.rc{flex-shrink:0;width:168px;background:var(--bg2);border:1px solid var(--b);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .2s}
+.rc:hover{border-color:rgba(120,87,255,.35);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.rc-img{height:76px;display:flex;align-items:center;justify-content:center;font-size:2rem}
+.rc-body{padding:9px 10px}
+.rc-name{font-size:0.71rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-game{font-size:0.62rem;color:var(--mu);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-tag{display:inline-block;font-size:0.57rem;font-weight:800;text-transform:uppercase;letter-spacing:.4px;padding:2px 6px;border-radius:4px;margin-top:5px}
+
+/* FILTERS */
+.frow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+.ft{background:var(--s);border:1px solid var(--b);color:var(--mu);padding:5px 13px;border-radius:99px;font-size:0.72rem;font-weight:700;transition:all .15s;letter-spacing:.2px}
+.ft:hover{color:var(--t2);background:var(--s2)}
+.ft.on{background:var(--a);border-color:transparent;color:#fff}
+.sort-wrap{margin-left:auto}
+.ssel{background:var(--s);border:1px solid var(--b);color:var(--t2);padding:5px 12px;border-radius:8px;font-family:'Syne',sans-serif;font-size:0.72rem;outline:none;cursor:pointer}
+.ssel option{background:var(--bg2)}
+
+/* SEC HEAD */
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sh-t{font-size:0.95rem;font-weight:700}
+.sh-c{font-size:0.71rem;color:var(--mu)}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;margin-bottom:36px}
+
+/* CARD */
+.card{background:var(--bg2);border:1px solid var(--b);border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .22s,box-shadow .22s;display:flex;flex-direction:column;position:relative;opacity:0;transform:translateY(14px)}
+.card.visible{opacity:1;transform:none;transition:opacity .26s ease,transform .26s ease,border-color .2s,box-shadow .22s}
+.card:hover{border-color:rgba(120,87,255,.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.card-banner{height:88px;display:flex;align-items:center;justify-content:center;font-size:2.3rem;position:relative;overflow:hidden;flex-shrink:0}
+.card-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,.65))}
+.card-banner-label{position:absolute;bottom:7px;left:10px;font-size:0.59rem;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.6px;z-index:1}
+.card-body{padding:13px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card-name{font-size:0.88rem;font-weight:700;line-height:1.3}
+.card-sub{font-size:0.69rem;color:var(--mu);margin-top:2px}
+.card-sub b{color:var(--a3);font-weight:600}
+.badges{display:flex;gap:4px;flex-wrap:wrap}
+.badge{font-size:0.59rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:4px}
+.bf{background:var(--grd);color:var(--gr);border:1px solid rgba(15,217,152,.2)}
+.bp{background:var(--yld);color:var(--yl);border:1px solid rgba(245,166,35,.2)}
+.bk{background:rgba(92,168,255,.1);color:var(--bl);border:1px solid rgba(92,168,255,.2)}
+.bv{background:rgba(120,87,255,.12);color:var(--a2);border:1px solid rgba(120,87,255,.22)}
+.codeblock{background:rgba(0,0,0,.4);border:1px solid var(--b);border-radius:8px;padding:8px 10px;font-family:'JetBrains Mono',monospace;font-size:0.64rem;color:#b5a0ff;line-height:1.6;max-height:54px;overflow:hidden;position:relative;white-space:pre;word-break:break-all}
+.codeblock::after{content:'';position:absolute;bottom:0;left:0;right:0;height:24px;background:linear-gradient(transparent,rgba(0,0,0,.4))}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.sts{display:flex;gap:9px}
+.st{display:flex;align-items:center;gap:2px;font-size:0.67rem;color:var(--mu)}
+.acts{display:flex;gap:5px}
+.btn-copy{background:rgba(120,87,255,.12);border:1px solid rgba(120,87,255,.2);color:var(--a2);padding:5px 12px;border-radius:7px;font-size:0.69rem;font-weight:700;transition:all .15s}
+.btn-copy:hover{background:var(--a);color:#fff;border-color:transparent}
+.btn-view{background:var(--s);border:1px solid var(--b);color:var(--mu);padding:5px 12px;border-radius:7px;font-size:0.69rem;font-weight:600;transition:all .15s}
+.btn-view:hover{color:var(--t);border-color:var(--b2)}
+.btn-like{display:flex;align-items:center;gap:3px;background:var(--s);border:1px solid var(--b);color:var(--mu);padding:5px 10px;border-radius:7px;font-size:0.69rem;font-weight:600;transition:all .18s}
+.btn-like:hover{color:var(--rd);border-color:rgba(255,92,92,.3);background:rgba(255,92,92,.07)}
+.btn-like.liked{background:rgba(255,92,92,.12);border-color:rgba(255,92,92,.3);color:var(--rd)}
+.btn-like.liked svg{fill:var(--rd)}
+@keyframes likePop{0%{transform:scale(1)}40%{transform:scale(1.4)}70%{transform:scale(.9)}100%{transform:scale(1)}}
+.btn-like.pop{animation:likePop .35s ease}
+.card-del{position:absolute;top:8px;right:8px;z-index:2;background:rgba(255,92,92,.15);border:1px solid rgba(255,92,92,.25);color:var(--rd);width:24px;height:24px;border-radius:6px;font-size:0.75rem;display:none;align-items:center;justify-content:center;transition:all .15s}
+.card-del:hover{background:rgba(255,92,92,.3)}
+.card:hover .card-del{display:flex}
+
+/* EMPTY */
+.empty{text-align:center;padding:70px 0;color:var(--mu)}
+.empty-icon{font-size:3rem;margin-bottom:14px;display:block}
+.empty-title{font-size:1rem;font-weight:700;margin-bottom:6px;color:var(--t2)}
+.empty-sub{font-size:0.82rem;line-height:1.6;max-width:300px;margin:0 auto 20px}
+.empty-btn{background:var(--a);border:none;color:#fff;padding:10px 22px;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer}
+
+/* PAGINATION */
+.pages{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;padding:4px 0 52px}
+.pg{background:var(--s);border:1px solid var(--b);color:var(--mu);min-width:32px;height:32px;border-radius:7px;font-size:0.78rem;display:flex;align-items:center;justify-content:center;transition:all .15s;padding:0 7px}
+.pg:hover{color:var(--t);background:var(--s2)}
+.pg.on{background:var(--a);border-color:transparent;color:#fff}
+.pg-sep{color:var(--mu);font-size:0.78rem;display:flex;align-items:center;height:32px;padding:0 3px}
+
+/* MODALS */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(16px);z-index:500;display:none;align-items:center;justify-content:center;padding:16px}
+.ov.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--b2);border-radius:18px;width:100%;max-width:600px;max-height:93vh;overflow-y:auto;position:relative;animation:mIn .2s ease}
+@keyframes mIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:none}}
+.modal-head{padding:22px 22px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-title{font-size:1.1rem;font-weight:800;letter-spacing:-.3px}
+.mcl{background:var(--s2);border:1px solid var(--b);color:var(--mu);width:28px;height:28px;border-radius:7px;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.mcl:hover{color:var(--t);background:var(--s3)}
+.modal-body{padding:0 22px 22px;display:flex;flex-direction:column;gap:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:0.7rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px}
+.fg input,.fg select,.fg textarea{background:var(--bg3);border:1.5px solid var(--b);border-radius:9px;color:var(--t);font-family:'JetBrains Mono',monospace;font-size:0.82rem;padding:10px 13px;outline:none;transition:border-color .2s}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--mu)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--a);box-shadow:0 0 0 3px rgba(120,87,255,.1)}
+.fg select{font-family:'Syne',sans-serif;cursor:pointer}
+.fg select option{background:var(--bg2)}
+.fg textarea{resize:vertical;min-height:120px;line-height:1.6}
+.preview-wrap{background:var(--bg);border:1px solid var(--b);border-radius:9px;padding:12px;display:flex;gap:10px;align-items:center}
+.preview-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.preview-name{font-size:0.85rem;font-weight:700}
+.preview-game{font-size:0.7rem;color:var(--mu);margin-top:2px}
+.form-actions{display:flex;gap:8px;justify-content:flex-end}
+.btn-submit{background:var(--a);border:none;color:#fff;padding:10px 22px;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;transition:all .2s;box-shadow:0 0 18px var(--ag);display:flex;align-items:center;gap:6px}
+.btn-submit:hover{background:#9070ff;transform:translateY(-1px)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-cancel{background:var(--s2);border:1px solid var(--b);color:var(--t2);padding:10px 18px;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;transition:all .2s}
+.btn-cancel:hover{color:var(--t)}
+.spinner{width:12px;height:12px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* VIEW MODAL */
+.vm-banner{width:100%;height:110px;display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:12px;margin-bottom:14px}
+.vm-title{font-size:1.1rem;font-weight:800;letter-spacing:-.3px;margin-bottom:3px}
+.vm-game{font-size:0.76rem;color:var(--mu);margin-bottom:12px}
+.vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.vm-box{background:var(--s);border:1px solid var(--b);border-radius:8px;padding:9px 12px}
+.vm-box-l{font-size:0.61rem;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;font-weight:700}
+.vm-box-v{font-size:0.85rem;font-weight:700}
+.vm-desc{color:var(--t2);font-size:0.8rem;line-height:1.65;margin:10px 0}
+.vm-cl{font-size:0.61rem;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:5px}
+.vm-code{background:rgba(0,0,0,.5);border:1px solid var(--b);border-radius:9px;padding:13px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#b5a0ff;line-height:1.75;overflow:auto;max-height:220px;white-space:pre-wrap;word-break:break-all;margin-bottom:13px}
+.vm-key-wrap{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.22);border-radius:9px;padding:11px 14px;margin-bottom:13px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.vm-key-lbl{font-size:.61rem;color:var(--yl);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:3px}
+.vm-key-val{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--t);word-break:break-all}
+.vm-key-copy{background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.3);color:var(--yl);padding:5px 11px;border-radius:7px;font-size:.67rem;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+.vm-key-copy:hover{background:rgba(245,166,35,.25)}
+.vm-acts{display:flex;gap:7px;flex-wrap:wrap}
+.bm{background:var(--a);border:none;color:#fff;padding:9px 20px;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;transition:all .2s;box-shadow:0 0 16px var(--ag)}
+.bm:hover{background:#9070ff;transform:translateY(-1px)}
+.bs{background:var(--s2);border:1px solid var(--b);color:var(--t2);padding:9px 18px;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:600;transition:all .2s}
+.bs:hover{color:var(--t)}
+.bs.vm-liked{background:rgba(255,92,92,.12);border-color:rgba(255,92,92,.3);color:var(--rd)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--gr);color:#030f09;padding:9px 22px;border-radius:99px;font-size:0.78rem;font-weight:800;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(15,217,152,.3)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--b);padding:26px 0;margin-top:20px}
+.fi{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.73rem;color:var(--mu)}
+.fl{display:flex;gap:16px}.fl a:hover{color:var(--t2)}
+
+/* RESPONSIVE */
+@media(max-width:860px){.nav-mid{display:none}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.vm-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.hero h1{letter-spacing:-1px}.stats{gap:7px}.stat-box{padding:10px 16px}}
+
+/* ── AUTH SCREEN ─────────────────────────────────────── */
+#auth-screen{position:fixed;inset:0;background:var(--bg);z-index:10000;display:none;align-items:center;justify-content:center;padding:16px}
+#auth-screen.show{display:flex}
+.auth-box{background:var(--bg2);border:1px solid var(--b2);border-radius:18px;width:100%;max-width:400px;padding:32px 28px;display:flex;flex-direction:column;gap:20px;position:relative;z-index:1}
+.auth-logo{text-align:center;font-size:1.4rem;font-weight:800;letter-spacing:-.5px}
+.auth-logo em{font-style:normal;color:var(--a2)}
+.auth-title{text-align:center;font-size:1rem;font-weight:700;margin-top:-6px}
+.auth-sub{text-align:center;font-size:.72rem;color:var(--mu);margin-top:-10px}
+.auth-tabs{display:flex;gap:4px;background:var(--s);border-radius:10px;padding:3px}
+.auth-tab{flex:1;padding:7px;border:none;background:none;color:var(--mu);font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;border-radius:8px;cursor:pointer;transition:all .18s}
+.auth-tab.on{background:var(--a);color:#fff}
+.auth-fields{display:flex;flex-direction:column;gap:10px}
+.auth-input{background:var(--bg3);border:1.5px solid var(--b);border-radius:9px;color:var(--t);font-family:'JetBrains Mono',monospace;font-size:.84rem;padding:11px 14px;outline:none;transition:border-color .2s;width:100%}
+.auth-input:focus{border-color:var(--a);box-shadow:0 0 0 3px rgba(120,87,255,.1)}
+.auth-input::placeholder{color:var(--mu)}
+.auth-btn{background:var(--a);border:none;color:#fff;padding:12px;border-radius:10px;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 0 20px rgba(120,87,255,.3);display:flex;align-items:center;justify-content:center;gap:7px}
+.auth-btn:hover{background:#9070ff;transform:translateY(-1px)}
+.auth-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.auth-err{background:rgba(255,92,92,.1);border:1px solid rgba(255,92,92,.25);color:var(--rd);font-size:.75rem;padding:9px 12px;border-radius:8px;text-align:center;display:none}
+.auth-err.show{display:block}
+/* LOGOUT in nav */
+.logout-btn{display:flex;align-items:center;gap:5px;background:rgba(255,92,92,.08);border:1px solid rgba(255,92,92,.2);color:var(--rd);padding:6px 13px;border-radius:8px;font-size:.77rem;font-weight:700;transition:all .2s;cursor:pointer}
+.logout-btn:hover{background:rgba(255,92,92,.2)}
+/* GO BACK */
+.auth-go-back{background:none;border:none;color:var(--mu);font-family:'Syne',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;padding:4px 0;text-align:center;width:100%;transition:color .15s}
+.auth-go-back:hover{color:var(--t2)}
+/* MY SCRIPTS SECTION */
+.my-scripts-section{margin-bottom:36px}
+.my-scripts-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.my-scripts-title{font-size:.95rem;font-weight:700;display:flex;align-items:center;gap:7px}
+.my-scripts-count{font-size:.68rem;color:var(--mu);background:var(--s);border:1px solid var(--b);padding:2px 8px;border-radius:99px}
+.my-scripts-empty{text-align:center;padding:32px 0;color:var(--mu);font-size:.8rem;background:var(--s);border:1px dashed var(--b);border-radius:12px}
+.my-scripts-empty span{display:block;font-size:1.8rem;margin-bottom:8px}
+/* LOGIN PROMPT BANNER */
+.login-prompt{background:rgba(120,87,255,.07);border:1px solid rgba(120,87,255,.2);border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+.login-prompt-txt{font-size:.8rem;color:var(--t2)}
+.login-prompt-txt strong{color:var(--a3)}
+.login-prompt-btn{background:var(--a);border:none;color:#fff;padding:7px 16px;border-radius:8px;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.login-prompt-btn:hover{background:#9070ff}
+/* VERIFY SCREEN */
+#verify-screen{position:fixed;inset:0;background:var(--bg);z-index:10001;display:none;align-items:center;justify-content:center;padding:16px}
+#verify-screen.show{display:flex}
+.verify-box{background:var(--bg2);border:1px solid var(--b2);border-radius:18px;width:100%;max-width:400px;padding:36px 28px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.verify-icon{font-size:2.8rem;line-height:1}
+.verify-title{font-size:1rem;font-weight:800}
+.verify-msg{font-size:.8rem;color:var(--t2);line-height:1.65}
+.verify-msg span{color:var(--a2);font-weight:700}
+.verify-login-btn{width:100%;background:var(--a);border:none;color:#fff;padding:12px;border-radius:10px;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 0 20px rgba(120,87,255,.3)}
+.verify-login-btn:hover{background:#9070ff;transform:translateY(-1px)}
+/* GOOGLE BTN */
+.auth-divider{display:flex;align-items:center;gap:10px;color:var(--mu);font-size:.7rem}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--b2)}
+.google-btn{width:100%;background:var(--bg3);border:1.5px solid var(--b2);color:var(--t);padding:11px;border-radius:10px;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:9px}
+.google-btn:hover{background:var(--bg4);border-color:rgba(255,255,255,.22);transform:translateY(-1px)}
+.google-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.google-btn svg{flex-shrink:0}
+
+/* ── PROFILE AVATAR in nav ─────────────────────────── */
+.nav-avatar{width:32px;height:32px;border-radius:50%;border:2px solid rgba(120,87,255,.4);cursor:pointer;object-fit:cover;display:none;transition:border-color .2s;background:var(--bg3);flex-shrink:0}
+.nav-avatar:hover{border-color:var(--a2)}
+.nav-avatar-placeholder{width:32px;height:32px;border-radius:50%;border:2px solid rgba(120,87,255,.4);cursor:pointer;display:none;background:linear-gradient(135deg,var(--a),var(--a2));align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:#fff;flex-shrink:0;transition:border-color .2s}
+.nav-avatar-placeholder:hover{border-color:var(--a2)}
+
+/* ── PROFILE MODAL ─────────────────────────────────── */
+#profile-ov{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(16px);z-index:600;display:none;align-items:center;justify-content:center;padding:16px}
+#profile-ov.open{display:flex}
+.profile-modal{background:var(--bg2);border:1px solid var(--b2);border-radius:18px;width:100%;max-width:480px;max-height:93vh;overflow-y:auto;animation:mIn .2s ease}
+.profile-head{padding:22px 22px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.profile-title{font-size:1rem;font-weight:800}
+.profile-body{padding:0 22px 22px;display:flex;flex-direction:column;gap:18px}
+.profile-avatar-section{display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px;background:var(--s);border-radius:12px;border:1px solid var(--b)}
+.profile-avatar-big{width:80px;height:80px;border-radius:50%;border:3px solid rgba(120,87,255,.4);object-fit:cover;background:var(--bg3)}
+.profile-avatar-placeholder-big{width:80px;height:80px;border-radius:50%;border:3px solid rgba(120,87,255,.4);background:linear-gradient(135deg,var(--a),var(--a2));display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;color:#fff}
+.profile-avatar-upload{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
+.profile-upload-btn{background:var(--s2);border:1px solid var(--b2);color:var(--t2);padding:6px 14px;border-radius:8px;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s}
+.profile-upload-btn:hover{background:var(--s3);color:var(--t)}
+.profile-upload-hint{font-size:.65rem;color:var(--mu)}
+.profile-info-row{display:flex;flex-direction:column;gap:4px}
+.profile-info-label{font-size:.65rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px}
+.profile-info-input{background:var(--bg3);border:1.5px solid var(--b);border-radius:9px;color:var(--t);font-family:'JetBrains Mono',monospace;font-size:.82rem;padding:10px 13px;outline:none;transition:border-color .2s;width:100%}
+.profile-info-input:focus{border-color:var(--a);box-shadow:0 0 0 3px rgba(120,87,255,.1)}
+.profile-info-input:disabled{opacity:.5;cursor:not-allowed}
+.profile-save-btn{background:var(--a);border:none;color:#fff;padding:11px;border-radius:9px;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 0 18px rgba(120,87,255,.3);display:flex;align-items:center;justify-content:center;gap:6px}
+.profile-save-btn:hover{background:#9070ff}
+.profile-save-btn:disabled{opacity:.5;cursor:not-allowed}
+.profile-danger-zone{border:1px solid rgba(255,92,92,.2);border-radius:12px;padding:14px}
+.profile-danger-title{font-size:.7rem;color:var(--rd);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.profile-delete-btn{background:rgba(255,92,92,.1);border:1px solid rgba(255,92,92,.25);color:var(--rd);padding:8px 16px;border-radius:8px;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s}
+.profile-delete-btn:hover{background:rgba(255,92,92,.2)}
+.profile-stats-row{display:flex;gap:10px;flex-wrap:wrap}
+.profile-stat-box{flex:1;min-width:80px;background:var(--s);border:1px solid var(--b);border-radius:10px;padding:10px;text-align:center}
+.profile-stat-n{font-size:1.1rem;font-weight:800;color:var(--a2)}
+.profile-stat-l{font-size:.6rem;color:var(--mu);margin-top:2px}
+
+/* ── COMMENTS in view modal ────────────────────────── */
+.vm-comments-section{margin-top:14px;border-top:1px solid var(--b);padding-top:14px}
+.vm-comments-title{font-size:.7rem;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:10px}
+.vm-comment-list{display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto;margin-bottom:10px}
+.vm-comment-list::-webkit-scrollbar{width:3px}
+.vm-comment-list::-webkit-scrollbar-thumb{background:var(--b2);border-radius:99px}
+.vm-comment{background:var(--s);border:1px solid var(--b);border-radius:9px;padding:9px 12px;position:relative}
+.vm-comment-author{font-size:.65rem;font-weight:700;color:var(--a3);margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.vm-comment-author-avatar{width:16px;height:16px;border-radius:50%;object-fit:cover;background:var(--a);flex-shrink:0}
+.vm-comment-text{font-size:.75rem;color:var(--t2);line-height:1.55;word-break:break-word}
+.vm-comment-del{position:absolute;top:7px;right:8px;background:none;border:none;color:var(--mu);font-size:.7rem;cursor:pointer;opacity:0;transition:opacity .15s;padding:2px 5px;border-radius:4px}
+.vm-comment:hover .vm-comment-del{opacity:1}
+.vm-comment-del:hover{color:var(--rd);background:rgba(255,92,92,.1)}
+.vm-comment-input-row{display:flex;gap:8px;align-items:flex-end}
+.vm-comment-input{flex:1;background:var(--bg3);border:1.5px solid var(--b);border-radius:9px;color:var(--t);font-family:'JetBrains Mono',monospace;font-size:.75rem;padding:9px 12px;outline:none;resize:none;min-height:38px;max-height:100px;line-height:1.5;transition:border-color .2s}
+.vm-comment-input:focus{border-color:var(--a);box-shadow:0 0 0 3px rgba(120,87,255,.1)}
+.vm-comment-input::placeholder{color:var(--mu)}
+.vm-comment-send{background:var(--a);border:none;color:#fff;padding:9px 14px;border-radius:8px;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.vm-comment-send:hover{background:#9070ff}
+.vm-comment-send:disabled{opacity:.5;cursor:not-allowed}
+.vm-comment-login-prompt{background:var(--s);border:1px solid var(--b);border-radius:9px;padding:10px 14px;text-align:center;font-size:.73rem;color:var(--mu)}
+.vm-comment-login-prompt a{color:var(--a2);cursor:pointer;font-weight:700}
+.vm-comment-login-prompt a:hover{text-decoration:underline}
+.vm-comments-loading{text-align:center;color:var(--mu);font-size:.72rem;padding:12px 0}
+.vm-comments-empty{text-align:center;color:var(--mu);font-size:.72rem;padding:12px 0}
+
+/* ── ADMIN BADGE in nav ───────────────────────────── */
+.admin-badge{display:none;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(245,166,35,.15),rgba(255,92,92,.15));border:1px solid rgba(245,166,35,.35);color:var(--yl);padding:5px 11px;border-radius:8px;font-size:.72rem;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:.3px}
+.admin-badge:hover{background:linear-gradient(135deg,rgba(245,166,35,.25),rgba(255,92,92,.25))}
+
+/* ── ADMIN PANEL ──────────────────────────────────── */
+#admin-ov{position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(20px);z-index:700;display:none;align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto}
+#admin-ov.open{display:flex}
+.admin-panel{background:var(--bg2);border:1px solid rgba(245,166,35,.3);border-radius:18px;width:100%;max-width:860px;margin:auto;animation:mIn .2s ease}
+.admin-head{padding:22px 24px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
+.admin-title{font-size:1.05rem;font-weight:800;display:flex;align-items:center;gap:8px}
+.admin-title span{background:linear-gradient(135deg,var(--yl),var(--rd));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.admin-tabs{display:flex;gap:2px;padding:16px 24px 0;border-bottom:1px solid var(--b);margin-bottom:0}
+.admin-tab{color:var(--mu);font-size:.75rem;font-weight:700;padding:6px 14px;border-radius:8px 8px 0 0;border:none;background:none;cursor:pointer;transition:all .15s;font-family:'Syne',sans-serif;border-bottom:2px solid transparent;margin-bottom:-1px}
+.admin-tab:hover{color:var(--t2)}
+.admin-tab.on{color:var(--yl);border-bottom-color:var(--yl);background:rgba(245,166,35,.06)}
+.admin-content{padding:20px 24px 24px;min-height:300px}
+
+/* Admin stats bar */
+.admin-stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.admin-stat{flex:1;min-width:100px;background:var(--s);border:1px solid var(--b);border-radius:10px;padding:12px;text-align:center}
+.admin-stat-n{font-size:1.2rem;font-weight:800;color:var(--yl)}
+.admin-stat-l{font-size:.62rem;color:var(--mu);margin-top:2px}
+
+/* Admin table */
+.admin-table{width:100%;border-collapse:collapse;font-size:.75rem}
+.admin-table th{text-align:left;color:var(--mu);font-weight:700;font-size:.63rem;text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;border-bottom:1px solid var(--b)}
+.admin-table td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;color:var(--t2)}
+.admin-table tr:hover td{background:var(--s)}
+.admin-table tr.banned-row td{opacity:.45}
+
+/* Admin action buttons */
+.admin-btn-del{background:rgba(255,92,92,.12);border:1px solid rgba(255,92,92,.25);color:var(--rd);padding:4px 10px;border-radius:6px;font-size:.65rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:'Syne',sans-serif;white-space:nowrap}
+.admin-btn-del:hover{background:rgba(255,92,92,.25)}
+.admin-btn-ban{background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);color:var(--yl);padding:4px 10px;border-radius:6px;font-size:.65rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:'Syne',sans-serif;white-space:nowrap}
+.admin-btn-ban:hover{background:rgba(245,166,35,.22)}
+.admin-btn-unban{background:rgba(15,217,152,.1);border:1px solid rgba(15,217,152,.25);color:var(--gr);padding:4px 10px;border-radius:6px;font-size:.65rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:'Syne',sans-serif;white-space:nowrap}
+.admin-btn-unban:hover{background:rgba(15,217,152,.2)}
+
+/* Announcement */
+.admin-announce-box{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.admin-announce-input{background:var(--bg3);border:1.5px solid var(--b);border-radius:9px;color:var(--t);font-family:'Syne',sans-serif;font-size:.84rem;padding:11px 14px;outline:none;transition:border-color .2s;width:100%}
+.admin-announce-input:focus{border-color:var(--yl);box-shadow:0 0 0 3px rgba(245,166,35,.1)}
+.admin-announce-textarea{background:var(--bg3);border:1.5px solid var(--b);border-radius:9px;color:var(--t);font-family:'Syne',sans-serif;font-size:.82rem;padding:11px 14px;outline:none;transition:border-color .2s;width:100%;resize:vertical;min-height:90px;line-height:1.6}
+.admin-announce-textarea:focus{border-color:var(--yl);box-shadow:0 0 0 3px rgba(245,166,35,.1)}
+.admin-send-btn{background:linear-gradient(135deg,var(--yl),#f97316);border:none;color:#000;padding:10px 22px;border-radius:9px;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;align-self:flex-end}
+.admin-send-btn:hover{opacity:.9;transform:translateY(-1px)}
+.admin-send-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* Announcement banner on site */
+#announce-banner{display:none;background:linear-gradient(135deg,rgba(245,166,35,.15),rgba(255,92,92,.1));border-bottom:1px solid rgba(245,166,35,.3);padding:10px clamp(12px,3vw,44px);position:relative;z-index:10}
+#announce-banner.show{display:flex;align-items:flex-start;gap:10px}
+.announce-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+.announce-body{flex:1;min-width:0}
+.announce-title{font-size:.78rem;font-weight:800;color:var(--yl);margin-bottom:2px}
+.announce-text{font-size:.74rem;color:var(--t2);line-height:1.5}
+.announce-close{background:none;border:none;color:var(--mu);font-size:.85rem;cursor:pointer;padding:2px 6px;border-radius:4px;flex-shrink:0}
+.announce-close:hover{color:var(--t);background:var(--s2)}
+
+/* Banned screen */
+#banned-screen{position:fixed;inset:0;background:var(--bg);z-index:20000;display:none;align-items:center;justify-content:center;padding:16px}
+#banned-screen.show{display:flex}
+.banned-box{background:var(--bg2);border:1px solid rgba(255,92,92,.3);border-radius:18px;width:100%;max-width:400px;padding:36px 28px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px}
+.banned-icon{font-size:3rem}
+.banned-title{font-size:1.1rem;font-weight:800;color:var(--rd)}
+.banned-msg{font-size:.8rem;color:var(--t2);line-height:1.65}
+
+/* Admin loading */
+.admin-loading{text-align:center;padding:40px;color:var(--mu);font-size:.8rem}
+.admin-empty{text-align:center;padding:40px;color:var(--mu);font-size:.8rem}
+.badge-banned{background:rgba(255,92,92,.12);color:var(--rd);border:1px solid rgba(255,92,92,.2);font-size:.55rem;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:.3px;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<!-- BANNED SCREEN -->
+<div id="banned-screen">
+  <div class="banned-box">
+    <div class="banned-icon">🚫</div>
+    <div class="banned-title">You've been banned</div>
+    <div class="banned-msg" id="banned-msg">Your account has been banned by an administrator. Contact us on Discord if you think this is a mistake.</div>
+    <a href="https://discord.gg/z3rRHQ9jj" target="_blank"><button class="auth-btn" style="width:100%;margin-top:4px">💬 Contact on Discord</button></a>
+  </div>
+</div>
+
+<!-- ANNOUNCEMENT BANNER -->
+<div id="announce-banner">
+  <div class="announce-icon">📢</div>
+  <div class="announce-body">
+    <div class="announce-title" id="announce-title"></div>
+    <div class="announce-text"  id="announce-text"></div>
+  </div>
+  <button class="announce-close" onclick="dismissAnnouncement()">✕</button>
+</div>
+
+<!-- ── AUTH SCREEN ──────────────────────────────────── -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo">CHRE<em>ATZ</em></div>
+    <div class="auth-title" id="auth-title">Welcome back 👋</div>
+    <div class="auth-sub" id="auth-sub">Sign in to access the Script Hub</div>
+    <div class="auth-tabs">
+      <button class="auth-tab on" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+    <div class="auth-fields">
+      <input class="auth-input" type="email" id="auth-email" placeholder="Email address" autocomplete="email">
+      <input class="auth-input" type="password" id="auth-pass" placeholder="Password" autocomplete="current-password">
+    </div>
+    <div class="auth-err" id="auth-err"></div>
+    <button class="auth-btn" id="auth-btn" onclick="doAuth()">
+      <span id="auth-btn-txt">Sign In</span>
+      <div class="spinner" id="auth-spin" style="display:none"></div>
+    </button>
+    <!-- Google button — only shown on Sign In tab -->
+    <div class="auth-divider" id="google-divider">or</div>
+    <button class="google-btn" id="google-btn" onclick="doGoogleSignIn()">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-3.59-13.46-8.83l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+      Continue with Google
+    </button>
+    <button class="auth-go-back" id="auth-go-back" onclick="closeAuthScreen()">← Go back</button>
+  </div>
+</div>
+
+<!-- VERIFY SCREEN -->
+<div id="verify-screen">
+  <div class="verify-box">
+    <div class="verify-icon">📧</div>
+    <div class="verify-title">Check your email</div>
+    <div class="verify-msg" id="verify-msg">
+      We have sent you a verification email to <span id="verify-email-display"></span>. Please verify it and log in.
+    </div>
+    <button class="verify-login-btn" onclick="window.goToLogin()">Login</button>
+  </div>
+</div>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="load-logo">CHRE<em>ATZ</em></div>
+  <div class="load-bar-wrap"><div class="load-bar"></div></div>
+  <div class="load-txt">Connecting to database…</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="goHome()">
+    <div class="logo-dot"></div>
+    CHRE<em>ATZ</em>
+  </div>
+  <div class="nav-mid">
+    <button class="ntab on" onclick="setTab(this,'all')">All Scripts</button>
+    <button class="ntab" onclick="setTab(this,'free')">Free</button>
+    <button class="ntab" onclick="setTab(this,'paid')">Paid</button>
+    <button class="ntab" onclick="setTab(this,'top')">Top Rated</button>
+    <button class="ntab" onclick="setTab(this,'new')">New</button>
+  </div>
+  <div class="nav-r">
+    <button class="add-btn" onclick="openAddModal()">+ Add Script</button>
+    <a href="https://discord.gg/z3rRHQ9jj" target="_blank" class="dbtn">
+      <svg width="14" height="11" viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.6.7a40.8 40.8 0 0 0-1.8 3.7 54.1 54.1 0 0 0-16.2 0A38.5 38.5 0 0 0 25.8.7 58.3 58.3 0 0 0 11.3 4.9C1.6 19.6-1 33.9.3 48.1a58.9 58.9 0 0 0 18 9.1 44.5 44.5 0 0 0 3.8-6.3 38.3 38.3 0 0 1-6-2.9l1.5-1.1a42 42 0 0 0 36 0l1.5 1.1a38.2 38.2 0 0 1-6 2.9 44.2 44.2 0 0 0 3.8 6.3 58.7 58.7 0 0 0 18-9.1C72.5 31.8 68.5 17.6 60.1 4.9ZM23.9 39.4c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.5 3.2 6.4 7.2 0 4-2.9 7.2-6.4 7.2Zm23.2 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.5 3.2 6.4 7.2 0 4-2.9 7.2-6.4 7.2Z"/></svg>
+      Discord
+    </a>
+    <button class="admin-badge" id="admin-badge" onclick="openAdmin()">⚡ Admin</button>
+    <div id="nav-avatar-placeholder" class="nav-avatar-placeholder" onclick="openProfile()" style="display:none"></div>
+    <img id="nav-avatar-img" class="nav-avatar" onclick="openProfile()" alt="Profile" style="display:none">
+    <button class="logout-btn" id="logout-btn" onclick="doLogout()" style="display:none">⏻ Logout</button>
+  </div>
+</nav>
+
+<!-- ADD MODAL -->
+<div class="ov" id="add-ov" onclick="maybeCloseAdd(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">➕ Add Your Script</div>
+      <button class="mcl" onclick="closeAddModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="preview-wrap">
+        <div class="preview-icon" id="prev-icon" style="background:#111">🎮</div>
+        <div>
+          <div class="preview-name" id="prev-name">Script Name</div>
+          <div class="preview-game" id="prev-game">Game Name</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Script Name *</label><input type="text" id="f-name" placeholder="e.g. Auto Farm v2" oninput="updatePreview()"></div>
+        <div class="fg"><label>Game Name *</label><input type="text" id="f-game" placeholder="e.g. Blox Fruits" oninput="updatePreview()"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Game Emoji</label><input type="text" id="f-emoji" placeholder="🎮" maxlength="4" oninput="updatePreview()" style="font-size:1.2rem"></div>
+        <div class="fg"><label>Type</label><select id="f-type"><option value="free">Free</option><option value="key">🔑 Key</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Executor</label>
+          <select id="f-exec"><option>Any</option><option>KRNL</option><option>Fluxus</option><option>Synapse X</option><option>Delta</option><option>Arceus X</option><option>Hydrogen</option></select>
+        </div>
+        <div class="fg"><label>Banner Color</label><input type="color" id="f-color" value="#7857ff" style="height:42px;padding:4px;cursor:pointer"></div>
+      </div>
+      <div class="fg"><label>Script Code *</label><textarea id="f-code" placeholder="-- Paste your Lua script here&#10;loadstring(game:HttpGet('https://...'))()"></textarea></div>
+      <div class="fg"><label>Description</label><input type="text" id="f-desc" placeholder="What does this script do?"></div>
+      <div class="fg"><label style="display:flex;align-items:center;gap:5px">🔑 Key / Schlüssel <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--mu);font-size:.65rem">(optional — nur wenn Script einen Key braucht)</span></label><input type="text" id="f-key" placeholder="z.B. Get key at linkvertise.com/…"></div>
+      <div class="form-actions">
+        <button class="btn-cancel" onclick="closeAddModal()">Cancel</button>
+        <button class="btn-submit" id="submit-btn" onclick="submitScript()">
+          <span id="submit-txt">✓ Add Script</span>
+          <div class="spinner" id="submit-spin"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW MODAL -->
+<div class="ov" id="view-ov" onclick="maybeCloseView(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="vm-title-head">Script</div>
+      <button class="mcl" onclick="closeViewModal()">✕</button>
+    </div>
+    <div class="modal-body" id="vm-body"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<main>
+<div class="w">
+  <div class="hero">
+    <div class="pill">Live Script Hub</div>
+    <h1>Your scripts,<br><span class="g">your hub.</span></h1>
+    <p>Add any Roblox script — stored in the cloud, visible to everyone, on every device.</p>
+    <div class="hero-actions">
+      <button class="h-btn-p" onclick="openAddModal()">+ Add Your Script</button>
+      <button class="h-btn-s" onclick="document.getElementById('q').focus()">Browse Scripts</button>
+    </div>
+  </div>
+
+  <div class="srch-wrap">
+    <svg class="si" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="q" placeholder="Search by name, game, executor, type…" oninput="onSearch(this)">
+    <button class="clr v" id="clr" onclick="clearSearch()" style="display:none">✕</button>
+  </div>
+  <div class="snote" id="snote"></div>
+
+  <div class="stats">
+    <div class="stat-box"><div class="stat-n p" id="s-total">0</div><div class="stat-l">Total Scripts</div></div>
+    <div class="stat-box"><div class="stat-n g" id="s-free">0</div><div class="stat-l">Free Scripts</div></div>
+    <div class="stat-box"><div class="stat-n y" id="s-games">0</div><div class="stat-l">Games</div></div>
+    <div class="stat-box"><div class="stat-n b" id="s-copies">0</div><div class="stat-l">Times Copied</div></div>
+  </div>
+
+  <div id="rec-wrap" class="rec-wrap" style="display:none">
+    <div class="sec-label">✨ Recommended</div>
+    <div class="rec-row" id="rec-row"></div>
+  </div>
+
+  <!-- LOGIN PROMPT (shown when not logged in) -->
+  <div class="login-prompt" id="login-prompt" style="display:none">
+    <div class="login-prompt-txt">
+      <strong>Sign in to add your own scripts</strong> — browse and copy scripts without an account.
+    </div>
+    <button class="login-prompt-btn" onclick="document.getElementById('auth-screen').classList.add('show');window.switchTab('signin')">Sign In / Sign Up</button>
+  </div>
+
+  <!-- MY SCRIPTS (shown when logged in) -->
+  <div class="my-scripts-section" id="my-scripts-section" style="display:none">
+    <div class="my-scripts-header">
+      <div class="my-scripts-title">
+        🗂 My Scripts
+        <span class="my-scripts-count" id="my-scripts-count">0</span>
+      </div>
+    </div>
+    <div class="grid" id="my-scripts-grid"></div>
+    <div class="my-scripts-empty" id="my-scripts-empty" style="display:none">
+      <span>📭</span>
+      You haven't added any scripts yet. Click <b>+ Add Script</b> to get started.
+    </div>
+  </div>
+
+  <div class="frow">
+    <button class="ft on" onclick="setFilter(this,'all')">All</button>
+    <button class="ft" onclick="setFilter(this,'free')">Free</button>
+    <button class="ft" onclick="setFilter(this,'paid')">Paid</button>
+    <button class="ft" onclick="setFilter(this,'key')">🔑 Key Scripts</button>
+    <button class="ft" onclick="setFilter(this,'liked')">❤️ Liked Scripts</button>
+    <div class="sort-wrap">
+      <select class="ssel" id="ssel" onchange="applyAll()">
+        <option value="new">Newest First</option>
+        <option value="popular">Most Copied</option>
+        <option value="likes">Most Liked</option>
+        <option value="az">A–Z</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="sh"><span class="sh-t" id="sh-t">All Scripts</span><span class="sh-c" id="sh-c"></span></div>
+  <div class="grid" id="grid"></div>
+
+  <div class="empty" id="empty-state" style="display:none">
+    <span class="empty-icon" id="empty-icon">📭</span>
+    <div class="empty-title" id="empty-title">No scripts yet</div>
+    <div class="empty-sub" id="empty-sub">Be the first to add a script!</div>
+    <button class="empty-btn" id="empty-btn" onclick="openAddModal()">+ Add Your First Script</button>
+  </div>
+
+  <div class="pages" id="pages"></div>
+</div>
+</main>
+
+<footer>
+  <div class="w">
+    <div class="fi">
+      <span>© 2025 <b>CHREATZ</b> — Community Script Hub</span>
+      <div class="fl">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="https://discord.gg/z3rRHQ9jj" target="_blank">Discord</a>
+        <a href="#">Report</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════
+     FIREBASE SDK
+════════════════════════════════════════════════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+import {
+  getFirestore, collection, addDoc, getDocs, doc, setDoc,
+  updateDoc, deleteDoc, onSnapshot, orderBy, query, serverTimestamp, getDoc, where
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  signOut, onAuthStateChanged, sendEmailVerification,
+  GoogleAuthProvider, signInWithPopup, updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+// ── YOUR FIREBASE CONFIG ──────────────────────────────
+const firebaseConfig = {
+  apiKey:            "AIzaSyBfxXXFMdmlVE375SiU-tKBUOVvrua8Bk8",
+  authDomain:        "cheatrz-ed3c4.firebaseapp.com",
+  projectId:         "cheatrz-ed3c4",
+  storageBucket:     "cheatrz-ed3c4.firebasestorage.app",
+  messagingSenderId: "832301738163",
+  appId:             "1:832301738163:web:2a6f952b17c5b89259e8c6",
+  measurementId:     "G-XSB2K0PLE9"
+};
+// ─────────────────────────────────────────────────────
+
+const app     = initializeApp(firebaseConfig);
+const db      = getFirestore(app);
+const auth    = getAuth(app);
+const storage = getStorage(app);
+
+// ── STATE ─────────────────────────────────────────────
+let scripts   = [];
+let myLikes   = JSON.parse(localStorage.getItem('chreatz_mylikes_v3') || '{}');
+let curFilter = 'all', curSearch = '', curPage = 1;
+const PER = 24;
+const MYLIKE_KEY = 'chreatz_mylikes_v3';
+
+
+// ── Badge helper ──────────────────────────────────────────────
+function typeBadge(type){
+  if(type==='paid') return '<span class="badge bp">💰 Paid</span>';
+  if(type==='key')  return '<span class="badge bk">🔑 Key</span>';
+  return '<span class="badge bf">Free</span>';
+}
+// ── NAV AVATAR ───────────────────────────────────────
+function updateNavAvatar(user){
+  const img=document.getElementById('nav-avatar-img');
+  const ph=document.getElementById('nav-avatar-placeholder');
+  if(!user){ img.style.display='none'; ph.style.display='none'; return; }
+  if(user.photoURL){
+    img.src=user.photoURL; img.style.display='flex'; ph.style.display='none';
+  } else {
+    ph.textContent=(user.displayName||user.email||'?')[0].toUpperCase();
+    ph.style.display='flex'; img.style.display='none';
+  }
+}
+
+// ── HELPERS ───────────────────────────────────────────
+function fmt(n){ return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(1)+'K':String(n||0) }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7) }
+function hexToRgb(hex){ const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return `${r},${g},${b}`; }
+function saveMyLikes(){ localStorage.setItem(MYLIKE_KEY, JSON.stringify(myLikes)); }
+
+// ── HIDE LOADING ──────────────────────────────────────
+function hideLoading(){
+  const el = document.getElementById('loading-screen');
+  el.classList.add('hidden');
+  setTimeout(()=>el.remove(), 500);
+}
+
+
+// ── AUTH LOGIC ────────────────────────────────────────
+let currentUser = null;
+let authMode = 'signin';
+const googleProvider = new GoogleAuthProvider();
+
+// ── Screen helpers ─────────────────────────────────────
+function showVerifyScreen(email){
+  document.getElementById('verify-email-display').textContent = email;
+  document.getElementById('verify-screen').classList.add('show');
+  document.getElementById('auth-screen').classList.remove('show');
+}
+function hideVerifyScreen(){
+  document.getElementById('verify-screen').classList.remove('show');
+}
+function showAuthScreen(){
+  document.getElementById('auth-screen').classList.add('show');
+  hideVerifyScreen();
+}
+function openDashboard(){
+  // close auth screen if open
+  document.getElementById('auth-screen').classList.remove('show');
+  hideVerifyScreen();
+  document.getElementById('logout-btn').style.display = 'flex';
+  document.getElementById('auth-email').value = '';
+  document.getElementById('auth-pass').value  = '';
+  updateNavAvatar(auth.currentUser);
+}
+function showLoginScreen(){
+  // just update logout button — don't block the whole page
+  document.getElementById('logout-btn').style.display = 'none';
+  hideVerifyScreen();
+}
+function requireAuth(){
+  if(!currentUser){
+    document.getElementById('auth-screen').classList.add('show');
+    return false;
+  }
+  return true;
+}
+window.closeAuthScreen = function(){
+  document.getElementById('auth-screen').classList.remove('show');
+};
+function updateUIForUser(user){
+  const logoutBtn       = document.getElementById('logout-btn');
+  const loginPrompt     = document.getElementById('login-prompt');
+  const mySection       = document.getElementById('my-scripts-section');
+  const goBack          = document.getElementById('auth-go-back');
+  if(user){
+    logoutBtn.style.display   = 'flex';
+    loginPrompt.style.display = 'none';
+    mySection.style.display   = 'block';
+    if(goBack) goBack.style.display = 'block';
+    buildMyScripts();
+    updateNavAvatar(user);
+  } else {
+    logoutBtn.style.display   = 'none';
+    loginPrompt.style.display = 'flex';
+    mySection.style.display   = 'none';
+    if(goBack) goBack.style.display = 'none';
+    updateNavAvatar(null);
+  }
+}
+function buildMyScripts(){
+  if(!currentUser) return;
+  const mine  = scripts.filter(s => s.ownerUid === currentUser.uid);
+  const grid  = document.getElementById('my-scripts-grid');
+  const empty = document.getElementById('my-scripts-empty');
+  const count = document.getElementById('my-scripts-count');
+  count.textContent = mine.length;
+  if(!mine.length){ grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  grid.innerHTML='';
+  mine.forEach((s,i)=>{
+    const r = hexToRgb(s.color||'#7857ff');
+    const el = document.createElement('div');
+    el.className='card';
+    el.innerHTML=
+      `<button class="card-del" title="Delete" onclick="event.stopPropagation();window._delScript('${s.id}')">✕</button>
+       <div class="card-banner" style="background:linear-gradient(135deg,rgba(${r},.28),rgba(${r},.58))">
+         <span style="font-size:2.3rem;position:relative;z-index:1">${esc(s.emoji||'🎮')}</span>
+         <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,.6))"></div>
+         <div class="card-banner-label">${esc(s.game)}</div>
+       </div>
+       <div class="card-body">
+         <div>
+           <div class="card-name">${esc(s.name)}</div>
+           <div class="card-sub">🎮 <b>${esc(s.game)}</b> · ${esc(s.exec||'Any')}</div>
+         </div>
+         <div class="badges">
+           ${typeBadge(s.type)}
+           <span class="badge bv">Mine</span>
+         </div>
+         <div class="codeblock">${esc(s.code||'')}</div>
+         <div class="card-foot">
+           <div class="sts">
+             <span class="st"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>${fmt(s.copies||0)}</span>
+           </div>
+           <div class="acts">
+             <button class="btn-copy" onclick="event.stopPropagation();window._doCopy(event,'${s.id}')">Copy</button>
+             <button class="btn-view" onclick="event.stopPropagation();window._openView('${s.id}')">View</button>
+           </div>
+         </div>
+       </div>`;
+    el.onclick=()=>window._openView(s.id);
+    grid.appendChild(el);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      el.style.transition=`opacity .26s ${i*.022}s ease,transform .26s ${i*.022}s ease,border-color .2s,box-shadow .22s`;
+      el.classList.add('visible');
+    }));
+  });
+}
+
+// ── Tab switch ─────────────────────────────────────────
+window.switchTab = function(mode){
+  authMode = mode;
+  document.getElementById('tab-signin').classList.toggle('on', mode==='signin');
+  document.getElementById('tab-signup').classList.toggle('on', mode==='signup');
+  document.getElementById('auth-btn-txt').textContent = mode==='signin' ? 'Sign In' : 'Sign Up';
+  document.getElementById('auth-err').classList.remove('show');
+  document.getElementById('auth-pass').autocomplete = mode==='signin' ? 'current-password' : 'new-password';
+  // Show Google button only on Sign In
+  const googleDiv = document.getElementById('google-divider');
+  const googleBtn = document.getElementById('google-btn');
+  const show = mode === 'signin';
+  googleDiv.style.display = show ? '' : 'none';
+  googleBtn.style.display = show ? '' : 'none';
+  // Update title/sub
+  document.getElementById('auth-title').textContent = mode==='signin' ? 'Welcome back 👋' : 'Create an account ✨';
+  document.getElementById('auth-sub').textContent   = mode==='signin' ? 'Sign in to access the Script Hub' : 'Join the CHREATZ community';
+};
+
+// ── Go back to login from verify screen ───────────────
+window.goToLogin = async function(){
+  if(auth.currentUser) await signOut(auth);
+  hideVerifyScreen();
+  document.getElementById('auth-screen').classList.add('show');
+  window.switchTab('signin');
+};
+
+// ── Email / Password auth ─────────────────────────────
+window.doAuth = async function(){
+  const email = document.getElementById('auth-email').value.trim();
+  const pass  = document.getElementById('auth-pass').value;
+  const errEl = document.getElementById('auth-err');
+  const btn   = document.getElementById('auth-btn');
+  const spin  = document.getElementById('auth-spin');
+  const txt   = document.getElementById('auth-btn-txt');
+  if(!email || !pass){ errEl.textContent='Please enter email and password.'; errEl.classList.add('show'); return; }
+  errEl.classList.remove('show');
+  btn.disabled=true; txt.style.display='none'; spin.style.display='block';
+  try{
+    if(authMode==='signup'){
+      // ── SIGN UP: send email verification, do NOT open dashboard ──
+      const cred = await createUserWithEmailAndPassword(auth, email, pass);
+      await sendEmailVerification(cred.user);
+      await signOut(auth); // sign out — must verify first
+      showVerifyScreen(email);
+    } else {
+      // ── SIGN IN: no email verification check ──────────────────────
+      await signInWithEmailAndPassword(auth, email, pass);
+      // onAuthStateChanged will open the dashboard
+    }
+  } catch(err){
+    let msg = 'Something went wrong. Try again.';
+    if(['auth/user-not-found','auth/wrong-password','auth/invalid-credential'].includes(err.code)){
+      msg = 'Email or password is incorrect.';
+    } else if(err.code==='auth/email-already-in-use'){
+      msg = 'User already exists. Please sign in.';
+    } else if(err.code==='auth/invalid-email'){
+      msg = 'Please enter a valid email address.';
+    } else if(err.code==='auth/weak-password'){
+      msg = 'Password must be at least 6 characters.';
+    }
+    errEl.textContent = msg;
+    errEl.classList.add('show');
+  } finally {
+    btn.disabled=false; txt.style.display='inline'; spin.style.display='none';
+  }
+};
+
+// ── Google Sign In (Sign In tab only) ─────────────────
+window.doGoogleSignIn = async function(){
+  const btn = document.getElementById('google-btn');
+  btn.disabled = true;
+  try{
+    await signInWithPopup(auth, googleProvider);
+    // onAuthStateChanged handles the rest
+  } catch(err){
+    const errEl = document.getElementById('auth-err');
+    let msg = 'Google sign in failed. Try again.';
+    if(err.code==='auth/popup-closed-by-user') msg = 'Google sign in was cancelled.';
+    if(err.code==='auth/popup-blocked') msg = 'Popup was blocked. Please allow popups.';
+    errEl.textContent = msg;
+    errEl.classList.add('show');
+  } finally {
+    btn.disabled = false;
+  }
+};
+
+// ── Logout ────────────────────────────────────────────
+window.doLogout = async function(){
+  await signOut(auth);
+};
+
+// ── Enter key ─────────────────────────────────────────
+['auth-email','auth-pass'].forEach(id=>{
+  document.getElementById(id).addEventListener('keydown', e=>{ if(e.key==='Enter') window.doAuth(); });
+});
+
+// ── Auth state ────────────────────────────────────────
+onAuthStateChanged(auth, (user)=>{
+  currentUser = user;
+  if(user){
+    openDashboard();
+    checkUserStatus(user);
+  } else {
+    showLoginScreen();
+  }
+  updateUIForUser(user);
+});
+
+// ── REAL-TIME LISTENER ────────────────────────────────
+// onSnapshot listens for any change in Firestore and updates instantly
+const q = query(collection(db, 'scripts'), orderBy('addedAt', 'desc'));
+onSnapshot(q, (snapshot) => {
+  scripts = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+  updateStats();
+  buildRecs();
+  applyAll();
+  hideLoading();
+  if(currentUser) buildMyScripts();
+}, (err) => {
+  console.error('Firebase error:', err);
+  showToast('⚠️ Database connection failed');
+  hideLoading();
+});
+
+// ── STATS ─────────────────────────────────────────────
+function updateStats(){
+  document.getElementById('s-total').textContent = scripts.length;
+  document.getElementById('s-free').textContent  = scripts.filter(s=>s.type==='free').length;
+  document.getElementById('s-games').textContent = new Set(scripts.map(s=>(s.game||'').toLowerCase().trim())).size;
+  const totalCopies = scripts.reduce((a,s)=>a+(s.copies||0),0);
+  document.getElementById('s-copies').textContent = fmt(totalCopies);
+}
+
+// ── RECS ──────────────────────────────────────────────
+function buildRecs(){
+  const rw = document.getElementById('rec-wrap');
+  if(!scripts.length){ rw.style.display='none'; return; }
+  rw.style.display='block';
+  const top = [...scripts].sort((a,b)=>(b.copies||0)-(a.copies||0)).slice(0,12);
+  const row = document.getElementById('rec-row');
+  row.innerHTML='';
+  top.forEach(s=>{
+    const rgb = hexToRgb(s.color||'#7857ff');
+    const d = document.createElement('div');
+    d.className='rc';
+    d.innerHTML=`<div class="rc-img" style="background:linear-gradient(135deg,rgba(${rgb},.3),rgba(${rgb},.55))">${esc(s.emoji||'🎮')}</div>
+    <div class="rc-body">
+      <div class="rc-name">${esc(s.name)}</div>
+      <div class="rc-game">${esc(s.game)}</div>
+      <span class="badge ${s.type==='free'?'bf':s.type==='key'?'bk':'bp'} rc-tag">${s.type==="key"?"🔑 Key":s.type==="paid"?"💰 Paid":"Free"}</span>
+    </div>`;
+    d.onclick=()=>openViewModal(s.id);
+    row.appendChild(d);
+  });
+}
+
+// ── FILTER + RENDER ───────────────────────────────────
+function applyAll(){
+  const sort = document.getElementById('ssel').value;
+  let d = [...scripts];
+
+  if(curFilter==='free')      d=d.filter(s=>s.type==='free');
+  else if(curFilter==='paid') d=d.filter(s=>s.type==='paid');
+  else if(curFilter==='key')  d=d.filter(s=>s.type==='key');
+  else if(curFilter==='liked') d=d.filter(s=>myLikes[s.id]);
+
+  if(curSearch){
+    const q = curSearch.toLowerCase();
+    d=d.filter(s=>
+      (s.name||'').toLowerCase().includes(q)||
+      (s.game||'').toLowerCase().includes(q)||
+      (s.exec||'').toLowerCase().includes(q)||
+      (s.type||'').toLowerCase().includes(q)||
+      (s.desc||'').toLowerCase().includes(q)
+    );
+  }
+
+  if(sort==='popular') d=[...d].sort((a,b)=>(b.copies||0)-(a.copies||0));
+  else if(sort==='likes') d=[...d].sort((a,b)=>(b.likes||0)-(a.likes||0));
+  else if(sort==='az') d=[...d].sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+  // default: already ordered by addedAt desc from Firestore
+
+  curPage=1; render(d);
+}
+
+function render(filtered){
+  const grid  = document.getElementById('grid');
+  const empty = document.getElementById('empty-state');
+  const pDiv  = document.getElementById('pages');
+  const shc   = document.getElementById('sh-c');
+
+  if(!filtered.length){
+    grid.innerHTML=''; pDiv.innerHTML=''; shc.textContent='';
+    empty.style.display='block';
+    if(curSearch){
+      document.getElementById('empty-icon').textContent='🔍';
+      document.getElementById('empty-title').textContent='No results found';
+      document.getElementById('empty-sub').textContent=`Nothing matches "${curSearch}"`;
+      document.getElementById('empty-btn').textContent='Clear Search';
+      document.getElementById('empty-btn').onclick=clearSearch;
+    } else {
+      document.getElementById('empty-icon').textContent='📭';
+      document.getElementById('empty-title').textContent='No scripts yet';
+      document.getElementById('empty-sub').textContent='Add the first script!';
+      document.getElementById('empty-btn').textContent='+ Add Script';
+      document.getElementById('empty-btn').onclick=openAddModal;
+    }
+    return;
+  }
+
+  empty.style.display='none';
+  const total = filtered.length;
+  const pages = Math.ceil(total/PER);
+  if(curPage>pages) curPage=1;
+  const slice = filtered.slice((curPage-1)*PER, curPage*PER);
+  shc.textContent=`${total} script${total!==1?'s':''}`;
+
+  grid.innerHTML='';
+  slice.forEach((s,i)=>{
+    const el = document.createElement('div');
+    el.className='card';
+    const rgb = hexToRgb(s.color||'#7857ff');
+    const tb  = s.type==='free'?'<span class="badge bf">Free</span>':'<span class="badge bp">Paid</span>';
+    const vb  = '';
+    const likedClass = myLikes[s.id]?' liked':'';
+    const likedFill  = myLikes[s.id]?'currentColor':'none';
+    const isOwner = currentUser && s.ownerUid && s.ownerUid === currentUser.uid;
+
+    el.innerHTML=
+      `${isOwner?'<button class="card-del" title="Delete" onclick="event.stopPropagation();window._delScript(\'${s.id}\')">✕</button>':''}
+       <div class="card-banner" style="background:linear-gradient(135deg,rgba(${rgb},.28),rgba(${rgb},.58))">
+         <span style="font-size:2.3rem;position:relative;z-index:1">${esc(s.emoji||'🎮')}</span>
+         <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,.6))"></div>
+         <div class="card-banner-label">${esc(s.game)}</div>
+       </div>
+       <div class="card-body">
+         <div>
+           <div class="card-name">${esc(s.name)}</div>
+           <div class="card-sub">🎮 <b>${esc(s.game)}</b> · ${esc(s.exec||'Any')}</div>
+         </div>
+         <div class="badges">${tb}${vb}</div>
+         <div class="codeblock">${esc(s.code||'')}</div>
+         <div class="card-foot">
+           <div class="sts">
+             <span class="st">
+               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+               ${fmt(s.copies||0)}
+             </span>
+           </div>
+           <div class="acts">
+             <button class="btn-like${likedClass}" onclick="event.stopPropagation();window._doLike('${s.id}',this)">
+               <svg width="10" height="10" viewBox="0 0 24 24" fill="${likedFill}" stroke="currentColor" stroke-width="2.3"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+               ${fmt(s.likes||0)}
+             </button>
+             <button class="btn-copy" onclick="event.stopPropagation();window._doCopy(event,'${s.id}')">Copy</button>
+             <button class="btn-view" onclick="event.stopPropagation();window._openView('${s.id}')">View</button>
+           </div>
+         </div>
+       </div>`;
+
+    el.onclick=()=>window._openView(s.id);
+    grid.appendChild(el);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      el.style.transition=`opacity .26s ${i*.022}s ease,transform .26s ${i*.022}s ease,border-color .2s,box-shadow .22s`;
+      el.classList.add('visible');
+    }));
+  });
+
+  // Pagination
+  pDiv.innerHTML='';
+  if(pages<=1) return;
+  const mk=(lbl,pg,cls='')=>{ const b=document.createElement('button'); b.className='pg'+(cls?' '+cls:''); b.textContent=lbl; b.onclick=()=>{ curPage=pg; render(filtered); window.scrollTo({top:0,behavior:'smooth'}); }; pDiv.appendChild(b); };
+  const sep=()=>{ const s=document.createElement('span'); s.className='pg-sep'; s.textContent='…'; pDiv.appendChild(s); };
+  mk('‹',Math.max(1,curPage-1));
+  const st=Math.max(1,curPage-2),en=Math.min(pages,curPage+2);
+  if(st>1){ mk(1,1); if(st>2) sep(); }
+  for(let p=st;p<=en;p++) mk(p,p,p===curPage?'on':'');
+  if(en<pages){ if(en<pages-1) sep(); mk(pages,pages); }
+  mk('›',Math.min(pages,curPage+1));
+}
+
+// ── COPY ──────────────────────────────────────────────
+window._doCopy = async function(e, id){
+  const s = scripts.find(x=>x.id===id); if(!s) return;
+  try{ await navigator.clipboard.writeText(s.code); }catch(_){}
+  // update copies count in Firestore
+  const newCopies = (s.copies||0)+1;
+  await updateDoc(doc(db,'scripts',id),{ copies: newCopies });
+  const btn=e.currentTarget, orig=btn.textContent;
+  btn.textContent='✓ Done!';
+  btn.style.cssText='background:rgba(15,217,152,.18);color:var(--gr);border-color:rgba(15,217,152,.28)';
+  setTimeout(()=>{ btn.textContent=orig; btn.style.cssText=''; },1600);
+  showToast('Script copied!');
+};
+
+// ── LIKE (auth-gated) ─────────────────────────────────
+window._doLike = async function(id, btn){
+  if(!currentUser){
+    document.getElementById('auth-screen').classList.add('show');
+    showToast('Sign in to like scripts!');
+    return;
+  }
+  const s = scripts.find(x=>x.id===id); if(!s) return;
+  const wasLiked = !!myLikes[id];
+  const newLikes = wasLiked ? Math.max(0,(s.likes||1)-1) : (s.likes||0)+1;
+  myLikes[id] = !wasLiked;
+  saveMyLikes();
+  await updateDoc(doc(db,'scripts',id),{ likes: newLikes });
+  if(btn){
+    const liked=myLikes[id];
+    btn.classList.toggle('liked',liked);
+    btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop');
+    const svg=btn.querySelector('svg');
+    if(svg) svg.setAttribute('fill',liked?'currentColor':'none');
+    const nodes=[...btn.childNodes];
+    const tn=nodes.find(n=>n.nodeType===3&&n.textContent.trim());
+    if(tn) tn.textContent=fmt(newLikes);
+  }
+  showToast(myLikes[id]?'❤️ Liked!':'💔 Unliked');
+};
+
+// ── DELETE ────────────────────────────────────────────
+window._delScript = async function(id){
+  if(!confirm('Delete this script from the global database?')) return;
+  await deleteDoc(doc(db,'scripts',id));
+  showToast('Script deleted.');
+};
+
+// ── ADD MODAL ─────────────────────────────────────────
+window.openAddModal = function(){
+  if(!requireAuth()) return;
+  // Rebuild type options based on admin status
+  const sel = document.getElementById('f-type');
+  const cur = sel.value;
+  sel.innerHTML = isAdmin
+    ? '<option value="free">Free</option><option value="paid">💰 Paid</option><option value="key">🔑 Key</option>'
+    : '<option value="free">Free</option><option value="key">🔑 Key</option>';
+  // keep previous selection if still valid
+  if([...sel.options].some(o=>o.value===cur)) sel.value=cur;
+  else sel.value='free';
+  document.getElementById('add-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+};
+window.closeAddModal = function(){
+  document.getElementById('add-ov').classList.remove('open');
+  document.body.style.overflow='';
+};
+window.maybeCloseAdd = function(e){ if(e.target===document.getElementById('add-ov')) closeAddModal(); };
+
+window.updatePreview = function(){
+  const name  = document.getElementById('f-name').value||'Script Name';
+  const game  = document.getElementById('f-game').value||'Game Name';
+  const emoji = document.getElementById('f-emoji').value||'🎮';
+  const color = document.getElementById('f-color').value||'#7857ff';
+  const rgb   = hexToRgb(color);
+  document.getElementById('prev-name').textContent=name;
+  document.getElementById('prev-game').textContent=game;
+  document.getElementById('prev-icon').textContent=emoji;
+  document.getElementById('prev-icon').style.background=`linear-gradient(135deg,rgba(${rgb},.3),rgba(${rgb},.6))`;
+};
+
+window.submitScript = async function(){
+  const name  = document.getElementById('f-name').value.trim();
+  const game  = document.getElementById('f-game').value.trim();
+  const code  = document.getElementById('f-code').value.trim();
+  const stype = document.getElementById('f-type').value;
+  if(!name||!game||!code){ showToast('Please fill in Name, Game and Code!'); return; }
+  // Only admin can add paid scripts
+  if(stype==='paid' && !isAdmin){ showToast('⚠️ Only admins can add paid scripts.'); return; }
+
+  // show spinner
+  const submitBtn = document.getElementById('submit-btn');
+  const submitTxt = document.getElementById('submit-txt');
+  const submitSpin= document.getElementById('submit-spin');
+  submitBtn.disabled=true;
+  submitTxt.style.display='none';
+  submitSpin.style.display='block';
+
+  try{
+    // use Firebase Auth uid + email as owner
+    const ownerUid   = currentUser ? currentUser.uid   : null;
+    const ownerEmail = currentUser ? currentUser.email : null;
+
+    await addDoc(collection(db,'scripts'),{
+      name, game,
+      emoji:    document.getElementById('f-emoji').value.trim()||'🎮',
+      color:    document.getElementById('f-color').value||'#7857ff',
+      type:     stype,
+      exec:     document.getElementById('f-exec').value,
+      code,
+      key:      document.getElementById('f-key').value.trim(),
+      desc:     document.getElementById('f-desc').value.trim(),
+      copies:   0,
+      likes:    0,
+      ownerUid:   ownerUid,
+      ownerEmail: ownerEmail,
+      addedAt:  serverTimestamp()
+    });
+    closeAddModal();
+    showToast('Script added to the hub! 🚀');
+    ['f-name','f-game','f-emoji','f-code','f-desc','f-key'].forEach(id=>{ document.getElementById(id).value=''; });
+    document.getElementById('f-color').value='#7857ff';
+    document.getElementById('f-type').value='free';
+    document.getElementById('f-exec').value='Any';
+    updatePreview();
+  } catch(err){
+    console.error(err);
+    showToast('⚠️ Error saving script. Try again.');
+  } finally{
+    submitBtn.disabled=false;
+    submitTxt.style.display='inline';
+    submitSpin.style.display='none';
+  }
+};
+
+// ── VIEW MODAL ────────────────────────────────────────
+window._openView = function(id){
+  const s = scripts.find(x=>x.id===id); if(!s) return;
+  const rgb = hexToRgb(s.color||'#7857ff');
+  const tb  = typeBadge(s.type);
+  const vb  = '';
+  const likedClass = myLikes[s.id]?' vm-liked':'';
+  const likedTxt   = myLikes[s.id]?'Liked':'Like';
+
+  document.getElementById('vm-title-head').textContent=s.name;
+  const isOwnerView = currentUser && s.ownerUid && s.ownerUid === currentUser.uid;
+  document.getElementById('vm-body').innerHTML=
+    `<div class="vm-banner" style="background:linear-gradient(135deg,rgba(${rgb},.3),rgba(${rgb},.6))">${esc(s.emoji||'🎮')}</div>
+     <div class="vm-title">${esc(s.name)}</div>
+     <div class="vm-game">🎮 ${esc(s.game)} · ${esc(s.exec||'Any')}</div>
+     <div class="badges" style="margin-bottom:10px">${tb}${vb}</div>
+     <div class="vm-grid">
+       <div class="vm-box"><div class="vm-box-l">Copies</div><div class="vm-box-v">${fmt(s.copies||0)}</div></div>
+       <div class="vm-box"><div class="vm-box-l">Likes</div><div class="vm-box-v" style="color:var(--rd)">❤️ ${fmt(s.likes||0)}</div></div>
+       <div class="vm-box"><div class="vm-box-l">Executor</div><div class="vm-box-v">${esc(s.exec||'Any')}</div></div>
+       <div class="vm-box"><div class="vm-box-l">Type</div><div class="vm-box-v" style="text-transform:capitalize">${s.type}</div></div>
+     </div>
+     ${s.desc?`<div class="vm-desc">${esc(s.desc)}</div>`:''}
+     <div class="vm-cl">Script Code</div>
+     <div class="vm-code">${esc(s.code||'')}</div>
+     ${s.key?`<div class="vm-key-wrap"><div><div class="vm-key-lbl">🔑 Key / Schlüssel</div><div class="vm-key-val">${esc(s.key)}</div></div><button class="vm-key-copy" onclick="navigator.clipboard.writeText('${esc(s.key)}');showToast('Key copied!')">Copy Key</button></div>`:''}
+     <div class="vm-acts">
+       <button class="bm" id="vm-copy-btn">📋 Copy Script</button>
+       <button class="bs${likedClass}" id="vm-like-btn">❤️ ${likedTxt} <span id="vm-like-cnt">${fmt(s.likes||0)}</span></button>
+       <a href="https://discord.gg/z3rRHQ9jj" target="_blank"><button class="bs">💬 Discord</button></a>
+       ${isOwnerView?`<button class="bs" style="background:rgba(255,92,92,.1);border-color:rgba(255,92,92,.25);color:var(--rd)" onclick="window._delScript('${s.id}');closeViewModal()">🗑 Delete</button>`:''}
+       <button class="bs" onclick="closeViewModal()">Close</button>
+     </div>
+     <div class="vm-comments-section">
+       <div class="vm-comments-title">💬 Comments</div>
+       <div class="vm-comment-list" id="vm-comment-list">
+         <div class="vm-comments-loading">Loading comments…</div>
+       </div>
+       <div id="vm-comment-input-area"></div>
+     </div>`;
+
+  document.getElementById('view-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+
+  document.getElementById('vm-copy-btn').onclick = ()=>{
+    try{ navigator.clipboard.writeText(s.code); }catch(_){}
+    updateDoc(doc(db,'scripts',id),{ copies:(s.copies||0)+1 });
+    showToast('Script copied!');
+  };
+  document.getElementById('vm-like-btn').onclick = async ()=>{
+    await window._doLike(s.id, null);
+    const btn=document.getElementById('vm-like-btn');
+    const updatedS=scripts.find(x=>x.id===s.id);
+    if(btn){ btn.classList.toggle('vm-liked',!!myLikes[s.id]); btn.innerHTML=`❤️ ${myLikes[s.id]?'Liked':'Like'} <span id="vm-like-cnt">${fmt(updatedS?updatedS.likes||0:0)}</span>`; }
+  };
+
+  // ── Comments ────────────────────────────────────────
+  loadComments(s.id);
+};
+
+window.closeViewModal = function(){
+  document.getElementById('view-ov').classList.remove('open');
+  document.body.style.overflow='';
+};
+window.maybeCloseView = function(e){ if(e.target===document.getElementById('view-ov')) closeViewModal(); };
+
+// ── SEARCH / FILTER / TAB ─────────────────────────────
+window.onSearch = function(inp){
+  curSearch=inp.value.trim();
+  document.getElementById('clr').style.display=curSearch?'flex':'none';
+  document.getElementById('snote').textContent=curSearch?`Showing results for "${curSearch}"` :'';
+  document.getElementById('rec-wrap').style.display=curSearch?'none':(scripts.length?'block':'none');
+  applyAll();
+};
+window.clearSearch = function(){
+  document.getElementById('q').value='';
+  curSearch='';
+  document.getElementById('clr').style.display='none';
+  document.getElementById('snote').textContent='';
+  document.getElementById('rec-wrap').style.display=scripts.length?'block':'none';
+  applyAll();
+};
+window.setFilter = function(btn,val){
+  curFilter=val;
+  document.querySelectorAll('.ft').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const lbl={all:'All Scripts',free:'Free Scripts',paid:'Paid Scripts',key:'🔑 Key Scripts',liked:'❤️ Liked Scripts'};
+  document.getElementById('sh-t').textContent=lbl[val]||'Scripts';
+  applyAll();
+};
+window.setTab = function(btn,val){
+  document.querySelectorAll('.ntab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const map={all:'all',free:'free',paid:'paid',key:'key',top:'all',new:'all'};
+  curFilter=map[val]||'all';
+  const sorts={top:'popular',new:'new',all:'new',free:'new',paid:'new'};
+  document.getElementById('ssel').value=sorts[val]||'new';
+  const lbl={all:'All Scripts',free:'Free Scripts',paid:'Paid Scripts',top:'Top Rated',new:'New Scripts'};
+  document.getElementById('sh-t').textContent=lbl[val]||'Scripts';
+  document.querySelectorAll('.ft').forEach(b=>b.classList.remove('on'));
+  if(val!=='top') document.querySelector('.ft').classList.add('on');
+  applyAll();
+};
+window.goHome = function(){
+  curFilter='all'; curSearch='';
+  document.getElementById('q').value='';
+  document.getElementById('clr').style.display='none';
+  document.getElementById('snote').textContent='';
+  document.getElementById('ssel').value='new';
+  document.getElementById('sh-t').textContent='All Scripts';
+  document.querySelectorAll('.ntab').forEach((b,i)=>b.classList.toggle('on',i===0));
+  document.querySelectorAll('.ft').forEach((b,i)=>b.classList.toggle('on',i===0));
+  applyAll();
+};
+
+// ── TOAST ─────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg.startsWith('⚠️')||msg.startsWith('❤️')||msg.startsWith('💔')||msg.startsWith('🚀')?msg:'✓ '+msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.classList.remove('show'),2100);
+}
+window.showToast=showToast;
+
+// ── KEYBOARD ──────────────────────────────────────────
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeAddModal(); closeViewModal(); }
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault(); document.getElementById('q').focus();
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// COMMENTS
+// ═══════════════════════════════════════════════════════════
+let commentsUnsub = null;
+
+async function loadComments(scriptId){
+  if(commentsUnsub){ commentsUnsub(); commentsUnsub=null; }
+  const inputArea = document.getElementById('vm-comment-input-area');
+  const list      = document.getElementById('vm-comment-list');
+  if(!list) return;
+  if(currentUser){
+    inputArea.innerHTML=`
+      <div class="vm-comment-input-row">
+        <textarea class="vm-comment-input" id="vm-comment-text" placeholder="Write a comment…" rows="1"
+          oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();window._sendComment('${scriptId}')}"></textarea>
+        <button class="vm-comment-send" id="vm-comment-send" onclick="window._sendComment('${scriptId}')">Send</button>
+      </div>`;
+  } else {
+    inputArea.innerHTML=`<div class="vm-comment-login-prompt">
+      <a onclick="closeViewModal();document.getElementById('auth-screen').classList.add('show');window.switchTab('signin')">Sign in</a> to leave a comment
+    </div>`;
+  }
+  const commentsQ = query(collection(db,'scripts',scriptId,'comments'),orderBy('createdAt','asc'));
+  commentsUnsub = onSnapshot(commentsQ,(snap)=>{
+    const listEl = document.getElementById('vm-comment-list');
+    if(!listEl) return;
+    if(snap.empty){ listEl.innerHTML='<div class="vm-comments-empty">No comments yet. Be the first!</div>'; return; }
+    listEl.innerHTML='';
+    snap.docs.forEach(d=>{
+      const cm=d.data();
+      const isOwn=currentUser&&cm.uid===currentUser.uid;
+      const div=document.createElement('div');
+      div.className='vm-comment';
+      const avatarHtml=cm.photoURL
+        ?`<img class="vm-comment-author-avatar" src="${cm.photoURL}" alt="">`
+        :`<div class="vm-comment-author-avatar" style="display:flex;align-items:center;justify-content:center;font-size:.5rem;font-weight:800;color:#fff;background:var(--a)">${(cm.displayName||'?')[0].toUpperCase()}</div>`;
+      div.innerHTML=`<div class="vm-comment-author">${avatarHtml}${esc(cm.displayName||'Anonymous')}</div>
+        <div class="vm-comment-text">${esc(cm.text||'')}</div>
+        ${isOwn?`<button class="vm-comment-del" onclick="window._delComment('${scriptId}','${d.id}')">✕</button>`:''}`;
+      listEl.appendChild(div);
+    });
+    listEl.scrollTop=listEl.scrollHeight;
+  });
+}
+
+window._sendComment = async function(scriptId){
+  const input=document.getElementById('vm-comment-text');
+  const btn=document.getElementById('vm-comment-send');
+  if(!input||!currentUser) return;
+  const text=input.value.trim();
+  if(!text) return;
+  btn.disabled=true;
+  try{
+    await addDoc(collection(db,'scripts',scriptId,'comments'),{
+      text,
+      uid:         currentUser.uid,
+      displayName: currentUser.displayName||currentUser.email.split('@')[0],
+      photoURL:    currentUser.photoURL||null,
+      createdAt:   serverTimestamp()
+    });
+    input.value=''; input.style.height='auto';
+  }catch(e){ showToast('⚠️ Could not send comment.'); }
+  finally{ btn.disabled=false; }
+};
+
+window._delComment = async function(scriptId,commentId){
+  try{ await deleteDoc(doc(db,'scripts',scriptId,'comments',commentId)); }
+  catch(e){ showToast('⚠️ Could not delete comment.'); }
+};
+
+// Patch closeViewModal to clean up comment listener
+const _origCloseView = window.closeViewModal;
+window.closeViewModal = function(){
+  if(commentsUnsub){ commentsUnsub(); commentsUnsub=null; }
+  _origCloseView();
+};
+
+// ═══════════════════════════════════════════════════════════
+// PROFILE
+// ═══════════════════════════════════════════════════════════
+let pendingAvatarFile = null;
+
+function renderProfileAvatar(containerId, user, size){
+  const el=document.getElementById(containerId); if(!el) return;
+  if(user&&user.photoURL){
+    el.innerHTML=`<img class="profile-avatar-big" src="${user.photoURL}" alt="Avatar" style="width:${size}px;height:${size}px;border-radius:50%;object-fit:cover;border:3px solid rgba(120,87,255,.4)">`;
+  } else {
+    const initial=(user?.displayName||user?.email||'?')[0].toUpperCase();
+    el.innerHTML=`<div class="profile-avatar-placeholder-big" style="width:${size}px;height:${size}px;font-size:${size*.38}px">${initial}</div>`;
+  }
+}
+
+
+window.openProfile = function(){
+  if(!currentUser) return;
+  document.getElementById('profile-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+  document.getElementById('profile-name-input').value   = currentUser.displayName||'';
+  document.getElementById('profile-email-display').value = currentUser.email||'';
+  const since=currentUser.metadata?.creationTime
+    ? new Date(currentUser.metadata.creationTime).toLocaleDateString() : '—';
+  document.getElementById('profile-since-display').value = since;
+  renderProfileAvatar('profile-avatar-preview', currentUser, 80);
+  const mine=scripts.filter(s=>s.ownerUid===currentUser.uid);
+  document.getElementById('pstat-scripts').textContent = mine.length;
+  document.getElementById('pstat-likes').textContent   = mine.reduce((a,s)=>a+(s.likes||0),0);
+  document.getElementById('pstat-copies').textContent  = mine.reduce((a,s)=>a+(s.copies||0),0);
+};
+
+window.closeProfile = function(){
+  document.getElementById('profile-ov').classList.remove('open');
+  document.body.style.overflow=''; pendingAvatarFile=null;
+};
+
+window.handleAvatarChange = function(e){
+  const file=e.target.files[0]; if(!file) return;
+  if(file.size>2*1024*1024){ showToast('⚠️ Image must be under 2MB'); return; }
+  pendingAvatarFile=file;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const c2=document.getElementById('profile-avatar-preview');
+    c2.innerHTML=`<img class="profile-avatar-big" src="${ev.target.result}" alt="Preview" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid rgba(120,87,255,.4)">`;
+  };
+  reader.readAsDataURL(file);
+};
+
+window.removeAvatar = async function(){
+  pendingAvatarFile=null;
+  try{
+    await updateProfile(auth.currentUser,{photoURL:''});
+    renderProfileAvatar('profile-avatar-preview',auth.currentUser,80);
+    updateNavAvatar(auth.currentUser);
+    showToast('Profile photo removed.');
+  }catch(e){ showToast('⚠️ Could not remove photo.'); }
+};
+
+window.saveProfile = async function(){
+  const btn=document.getElementById('profile-save-btn');
+  const txt=document.getElementById('profile-save-txt');
+  const spin=document.getElementById('profile-save-spin');
+  const name=document.getElementById('profile-name-input').value.trim();
+  if(!name){ showToast('⚠️ Display name cannot be empty.'); return; }
+  btn.disabled=true; txt.style.display='none'; spin.style.display='block';
+  try{
+    let photoURL=auth.currentUser.photoURL||'';
+    if(pendingAvatarFile){
+      const storageRef=ref(storage,`avatars/${auth.currentUser.uid}`);
+      await uploadBytes(storageRef,pendingAvatarFile);
+      photoURL=await getDownloadURL(storageRef);
+    }
+    await updateProfile(auth.currentUser,{displayName:name, photoURL});
+    await setDoc(doc(db,'users',auth.currentUser.uid),{
+      displayName:name, email:auth.currentUser.email, photoURL, updatedAt:serverTimestamp()
+    },{merge:true});
+    updateNavAvatar(auth.currentUser);
+    pendingAvatarFile=null;
+    showToast('✓ Profile saved!');
+  }catch(e){ console.error(e); showToast('⚠️ Could not save profile.'); }
+  finally{ btn.disabled=false; txt.style.display='inline'; spin.style.display='none'; }
+};
+
+window.signOutEverywhere = async function(){
+  await signOut(auth); closeProfile(); showToast('Signed out.');
+};
+
+
+// ═══════════════════════════════════════════════════════════════
+// ADMIN SYSTEM
+// ═══════════════════════════════════════════════════════════════
+const ADMIN_EMAIL = 'shahab7asadullah@gmail.com';
+let isAdmin = false;
+let currentAdminTab = 'overview';
+
+// ── Check admin + banned status on login ────────────────────
+async function checkUserStatus(user){
+  if(!user) return;
+  // Check if admin
+  isAdmin = (user.email === ADMIN_EMAIL);
+  const badge = document.getElementById('admin-badge');
+  if(badge) badge.style.display = isAdmin ? 'flex' : 'none';
+
+  // Check if banned
+  try{
+    const snap = await getDoc(doc(db,'users',user.uid));
+    if(snap.exists() && snap.data().banned){
+      // show banned screen, sign out
+      await signOut(auth);
+      document.getElementById('banned-screen').classList.add('show');
+      document.getElementById('banned-msg').textContent =
+        snap.data().banReason || 'Your account has been banned by an administrator.';
+      return;
+    }
+  }catch(e){ console.error('Status check error', e); }
+
+  // Load announcement
+  loadAnnouncement();
+}
+
+// ── Announcement ────────────────────────────────────────────
+async function loadAnnouncement(){
+  try{
+    const snap = await getDoc(doc(db,'admin','announcement'));
+    if(snap.exists() && snap.data().active){
+      const d = snap.data();
+      const dismissed = localStorage.getItem('chreatz_dismissed_announce');
+      if(dismissed === d.createdAt?.toString()) return;
+      document.getElementById('announce-title').textContent = d.title || '';
+      document.getElementById('announce-text').textContent  = d.text  || '';
+      document.getElementById('announce-banner').classList.add('show');
+    }
+  }catch(e){}
+}
+window.dismissAnnouncement = function(){
+  document.getElementById('announce-banner').classList.remove('show');
+};
+
+// ── Open / Close admin panel ────────────────────────────────
+window.openAdmin = function(){
+  if(!isAdmin) return;
+  document.getElementById('admin-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+  switchAdminTab('overview', document.querySelector('.admin-tab'));
+};
+window.closeAdmin = function(){
+  document.getElementById('admin-ov').classList.remove('open');
+  document.body.style.overflow='';
+};
+
+// ── Tab switching ───────────────────────────────────────────
+window.switchAdminTab = function(tab, btn){
+  currentAdminTab = tab;
+  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  renderAdminTab(tab);
+};
+
+async function renderAdminTab(tab){
+  const content = document.getElementById('admin-content');
+  content.innerHTML='<div class="admin-loading">Loading…</div>';
+
+  if(tab==='overview'){
+    // stats from in-memory scripts + fetch user count
+    let userCount = 0;
+    let bannedCount = 0;
+    try{
+      const usersSnap = await getDocs(collection(db,'users'));
+      userCount = usersSnap.size;
+      bannedCount = usersSnap.docs.filter(d=>d.data().banned).length;
+    }catch(e){}
+
+    const totalCopies = scripts.reduce((a,s)=>a+(s.copies||0),0);
+    const totalLikes  = scripts.reduce((a,s)=>a+(s.likes||0),0);
+
+    content.innerHTML=`
+      <div class="admin-stats">
+        <div class="admin-stat"><div class="admin-stat-n">${scripts.length}</div><div class="admin-stat-l">Total Scripts</div></div>
+        <div class="admin-stat"><div class="admin-stat-n">${userCount}</div><div class="admin-stat-l">Registered Users</div></div>
+        <div class="admin-stat"><div class="admin-stat-n">${bannedCount}</div><div class="admin-stat-l">Banned Users</div></div>
+        <div class="admin-stat"><div class="admin-stat-n">${fmt(totalCopies)}</div><div class="admin-stat-l">Total Copies</div></div>
+        <div class="admin-stat"><div class="admin-stat-n">${fmt(totalLikes)}</div><div class="admin-stat-l">Total Likes</div></div>
+      </div>
+      <div style="font-size:.78rem;color:var(--t2);line-height:1.7;background:var(--s);border:1px solid var(--b);border-radius:10px;padding:14px">
+        <b style="color:var(--yl)">⚡ Admin Panel — CHREATZ</b><br>
+        Logged in as <b style="color:var(--a2)">${ADMIN_EMAIL}</b><br>
+        Use the tabs above to manage scripts, ban/unban users, and post announcements.
+      </div>`;
+  }
+
+  else if(tab==='scripts'){
+    const sorted = [...scripts].sort((a,b)=>(b.addedAt?.seconds||0)-(a.addedAt?.seconds||0));
+    if(!sorted.length){ content.innerHTML='<div class="admin-empty">No scripts yet.</div>'; return; }
+    content.innerHTML=`
+      <table class="admin-table">
+        <thead><tr>
+          <th>Script</th><th>Game</th><th>Owner</th><th>Copies</th><th>Likes</th><th>Actions</th>
+        </tr></thead>
+        <tbody>${sorted.map(s=>`
+          <tr>
+            <td><b style="color:var(--t)">${esc(s.name)}</b></td>
+            <td>${esc(s.game)}</td>
+            <td style="font-size:.65rem;color:var(--mu)">${esc(s.ownerEmail||'—')}</td>
+            <td>${fmt(s.copies||0)}</td>
+            <td>${fmt(s.likes||0)}</td>
+            <td><button class="admin-btn-del" onclick="adminDeleteScript('${s.id}')">🗑 Delete</button></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`;
+  }
+
+  else if(tab==='users'){
+    try{
+      const usersSnap = await getDocs(collection(db,'users'));
+      if(usersSnap.empty){ content.innerHTML='<div class="admin-empty">No registered users yet.</div>'; return; }
+      const users = usersSnap.docs.map(d=>({id:d.id,...d.data()}));
+      users.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+      content.innerHTML=`
+        <table class="admin-table">
+          <thead><tr>
+            <th>Display Name</th><th>Email</th><th>Status</th><th>Actions</th>
+          </tr></thead>
+          <tbody>${users.map(u=>`
+            <tr class="${u.banned?'banned-row':''}">
+              <td><b style="color:var(--t)">${esc(u.displayName||'—')}</b></td>
+              <td style="font-size:.7rem">${esc(u.email||'—')}</td>
+              <td>${u.banned?'<span class="badge-banned">Banned</span>':'<span style="color:var(--gr);font-size:.65rem;font-weight:700">Active</span>'}</td>
+              <td style="display:flex;gap:5px;flex-wrap:wrap">
+                ${u.email===ADMIN_EMAIL?'<span style="color:var(--yl);font-size:.65rem;font-weight:800">⚡ Owner</span>':`
+                  ${u.banned
+                    ?`<button class="admin-btn-unban" onclick="adminUnbanUser('${u.id}')">✓ Unban</button>`
+                    :`<button class="admin-btn-ban" onclick="adminBanUser('${u.id}','${esc(u.email||'')}')">🚫 Ban</button>`}
+                  <button class="admin-btn-del" onclick="adminDeleteUserScripts('${u.id}','${esc(u.email||'')}')">🗑 Del Scripts</button>`}
+              </td>
+            </tr>`).join('')}
+          </tbody>
+        </table>`;
+    }catch(e){ content.innerHTML=`<div class="admin-empty">Error loading users: ${e.message}</div>`; }
+  }
+
+  else if(tab==='announce'){
+    // Load current announcement
+    let current = {title:'',text:'',active:false};
+    try{
+      const snap = await getDoc(doc(db,'admin','announcement'));
+      if(snap.exists()) current = snap.data();
+    }catch(e){}
+
+    content.innerHTML=`
+      <div class="admin-announce-box">
+        <div style="font-size:.72rem;color:var(--mu);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Post Announcement</div>
+        <input class="admin-announce-input" id="ann-title" placeholder="Title (e.g. New Update 🎉)" value="${esc(current.title||'')}">
+        <textarea class="admin-announce-textarea" id="ann-text" placeholder="Message…">${esc(current.text||'')}</textarea>
+        <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
+          <button class="admin-btn-del" onclick="adminClearAnnouncement()" style="padding:8px 16px">🗑 Clear</button>
+          <button class="admin-send-btn" id="ann-send-btn" onclick="adminPostAnnouncement()">
+            <span id="ann-send-txt">📢 Post to All Users</span>
+            <div class="spinner" id="ann-spin" style="display:none"></div>
+          </button>
+        </div>
+      </div>
+      <div style="margin-top:14px;font-size:.72rem;color:var(--mu)">
+        ${current.active?'<span style="color:var(--gr);font-weight:700">✓ Announcement is currently live</span>':'No active announcement'}
+      </div>`;
+  }
+}
+
+// ── Admin actions ────────────────────────────────────────────
+window.adminDeleteScript = async function(id){
+  if(!isAdmin) return;
+  if(!confirm('Delete this script permanently?')) return;
+  try{
+    await deleteDoc(doc(db,'scripts',id));
+    showToast('✓ Script deleted by admin.');
+    renderAdminTab(currentAdminTab);
+  }catch(e){ showToast('⚠️ Error: ' + e.message); }
+};
+
+window.adminBanUser = async function(uid, email){
+  if(!isAdmin) return;
+  const reason = window._adminPrompt('Ban reason (shown to user):');
+  if(reason===null) return;
+  try{
+    await setDoc(doc(db,'users',uid),{
+      banned: true,
+      banReason: reason || 'Banned by administrator.',
+      bannedAt: serverTimestamp()
+    },{ merge:true });
+    showToast(`✓ User ${email} banned.`);
+    renderAdminTab('users');
+  }catch(e){ showToast('⚠️ ' + e.message); }
+};
+
+window.adminUnbanUser = async function(uid){
+  if(!isAdmin) return;
+  try{
+    await updateDoc(doc(db,'users',uid),{ banned:false, banReason:'' });
+    showToast('✓ User unbanned.');
+    renderAdminTab('users');
+  }catch(e){ showToast('⚠️ ' + e.message); }
+};
+
+window.adminDeleteUserScripts = async function(uid, email){
+  if(!isAdmin) return;
+  if(!confirm(`Delete ALL scripts by ${email}?`)) return;
+  const mine = scripts.filter(s=>s.ownerUid===uid);
+  if(!mine.length){ showToast('No scripts from this user.'); return; }
+  try{
+    await Promise.all(mine.map(s=>deleteDoc(doc(db,'scripts',s.id))));
+    showToast(`✓ Deleted ${mine.length} scripts from ${email}.`);
+    renderAdminTab('scripts');
+  }catch(e){ showToast('⚠️ ' + e.message); }
+};
+
+window.adminPostAnnouncement = async function(){
+  const title = document.getElementById('ann-title')?.value.trim();
+  const text  = document.getElementById('ann-text')?.value.trim();
+  if(!title && !text){ showToast('⚠️ Enter a title or message.'); return; }
+  const btn  = document.getElementById('ann-send-btn');
+  const txt  = document.getElementById('ann-send-txt');
+  const spin = document.getElementById('ann-spin');
+  btn.disabled=true; txt.style.display='none'; spin.style.display='block';
+  try{
+    const ts = Date.now();
+    await setDoc(doc(db,'admin','announcement'),{
+      title, text, active:true, createdAt: ts
+    });
+    // Show on current page immediately
+    document.getElementById('announce-title').textContent = title;
+    document.getElementById('announce-text').textContent  = text;
+    document.getElementById('announce-banner').classList.add('show');
+    showToast('📢 Announcement posted!');
+    renderAdminTab('announce');
+  }catch(e){ showToast('⚠️ ' + e.message); }
+  finally{ btn.disabled=false; txt.style.display='inline'; spin.style.display='none'; }
+};
+
+window.adminClearAnnouncement = async function(){
+  try{
+    await setDoc(doc(db,'admin','announcement'),{ title:'', text:'', active:false });
+    document.getElementById('announce-banner').classList.remove('show');
+    showToast('✓ Announcement cleared.');
+    renderAdminTab('announce');
+  }catch(e){ showToast('⚠️ ' + e.message); }
+};
+
+// Simple in-app text prompt alternative (uses a mini overlay instead of window.prompt)
+window._adminPrompt = function(label){
+  return window.prompt(label); // fallback — fine for admin-only use
+};
+
+// ESC closes admin panel
+const _origKeydown = document.onkeydown;
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape') closeAdmin();
+});
+
+
+</script>
+
+<!-- ── PROFILE MODAL ─────────────────────────────── -->
+<div id="profile-ov" onclick="if(event.target===this)closeProfile()">
+  <div class="profile-modal">
+    <div class="profile-head">
+      <div class="profile-title">👤 Profile Settings</div>
+      <button class="mcl" onclick="closeProfile()">✕</button>
+    </div>
+    <div class="profile-body">
+
+      <!-- Avatar -->
+      <div class="profile-avatar-section">
+        <div id="profile-avatar-preview"></div>
+        <div class="profile-avatar-upload">
+          <label class="profile-upload-btn" for="profile-pic-input">📷 Change Photo</label>
+          <input type="file" id="profile-pic-input" accept="image/*" style="display:none" onchange="handleAvatarChange(event)">
+          <button class="profile-upload-btn" onclick="removeAvatar()">🗑 Remove</button>
+        </div>
+        <div class="profile-upload-hint">JPG, PNG or GIF · max 2MB</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="profile-stats-row">
+        <div class="profile-stat-box"><div class="profile-stat-n" id="pstat-scripts">0</div><div class="profile-stat-l">Scripts Added</div></div>
+        <div class="profile-stat-box"><div class="profile-stat-n" id="pstat-likes">0</div><div class="profile-stat-l">Total Likes</div></div>
+        <div class="profile-stat-box"><div class="profile-stat-n" id="pstat-copies">0</div><div class="profile-stat-l">Total Copies</div></div>
+      </div>
+
+      <!-- Display Name -->
+      <div class="profile-info-row">
+        <div class="profile-info-label">Display Name</div>
+        <input class="profile-info-input" id="profile-name-input" placeholder="Your display name" maxlength="32">
+      </div>
+
+      <!-- Email (read-only) -->
+      <div class="profile-info-row">
+        <div class="profile-info-label">Email</div>
+        <input class="profile-info-input" id="profile-email-display" disabled>
+      </div>
+
+      <!-- Member since -->
+      <div class="profile-info-row">
+        <div class="profile-info-label">Member Since</div>
+        <input class="profile-info-input" id="profile-since-display" disabled>
+      </div>
+
+      <!-- Save button -->
+      <button class="profile-save-btn" id="profile-save-btn" onclick="saveProfile()">
+        <span id="profile-save-txt">💾 Save Changes</span>
+        <div class="spinner" id="profile-save-spin" style="display:none"></div>
+      </button>
+
+      <!-- Danger zone -->
+      <div class="profile-danger-zone">
+        <div class="profile-danger-title">Danger Zone</div>
+        <button class="profile-delete-btn" onclick="signOutEverywhere()">⏻ Sign Out from all devices</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── ADMIN PANEL ───────────────────────────────── -->
+<div id="admin-ov" onclick="if(event.target===this)closeAdmin()">
+  <div class="admin-panel">
+    <div class="admin-head">
+      <div class="admin-title">⚡ <span>Admin Panel</span></div>
+      <button class="mcl" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="admin-tabs">
+      <button class="admin-tab on" onclick="switchAdminTab('overview',this)">📊 Overview</button>
+      <button class="admin-tab" onclick="switchAdminTab('scripts',this)">📜 Scripts</button>
+      <button class="admin-tab" onclick="switchAdminTab('users',this)">👥 Users</button>
+      <button class="admin-tab" onclick="switchAdminTab('announce',this)">📢 Announce</button>
+    </div>
+    <div class="admin-content" id="admin-content">
+      <div class="admin-loading">Loading…</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
