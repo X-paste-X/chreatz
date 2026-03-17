@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHREATZ — Roblox Script Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070f;--bg2:#0c0c18;--bg3:#10101f;--bg4:#141428;
+  --s:rgba(255,255,255,0.04);--s2:rgba(255,255,255,0.07);--s3:rgba(255,255,255,0.11);
+  --b:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.12);
+  --a:#7857ff;--a2:#a78bfa;--a3:#c4b5fd;--ag:rgba(120,87,255,0.3);
+  --gr:#0fd998;--grd:rgba(15,217,152,0.1);
+  --yl:#f5a623;--yld:rgba(245,166,35,0.1);
+  --rd:#ff5c5c;--bl:#5ca8ff;
+  --t:#f0f0ff;--t2:#a8a8c0;--mu:#58586e;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 1100px 800px at -10% -15%,rgba(120,87,255,.15) 0%,transparent 55%),
+    radial-gradient(ellipse 900px 700px at 110% 110%,rgba(15,217,152,.08) 0%,transparent 50%),
+    radial-gradient(ellipse 600px 400px at 50% 50%,rgba(120,87,255,.04) 0%,transparent 70%)}
+
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:99px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(12px,3vw,44px);background:rgba(7,7,15,0.85);backdrop-filter:blur(28px) saturate(1.5);border-bottom:1px solid var(--b)}
+.logo{font-size:1.18rem;font-weight:800;letter-spacing:-0.5px;cursor:pointer;user-select:none;display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--a2);box-shadow:0 0 10px var(--ag);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.logo em{font-style:normal;color:var(--a2)}
+.nav-mid{display:flex;gap:2px}
+.ntab{color:var(--mu);font-size:0.77rem;font-weight:600;padding:5px 11px;border-radius:7px;border:none;background:none;transition:all .15s;letter-spacing:.2px}
+.ntab:hover{color:var(--t2);background:var(--s)}
+.ntab.on{color:var(--a3);background:rgba(120,87,255,.1)}
+.nav-r{display:flex;gap:8px;align-items:center}
+.add-btn{display:flex;align-items:center;gap:5px;background:rgba(120,87,255,.12);border:1px solid rgba(120,87,255,.28);color:var(--a3);padding:6px 13px;border-radius:8px;font-size:0.77rem;font-weight:700;transition:all .2s}
+.add-btn:hover{background:var(--a);border-color:var(--a);color:#fff;transform:translateY(-1px)}
+.dbtn{display:flex;align-items:center;gap:6px;background:rgba(88,101,242,.1);border:1px solid rgba(88,101,242,.22);color:#7d8fff;padding:6px 13px;border-radius:8px;font-size:0.77rem;font-weight:700;transition:all .2s}
+.dbtn:hover{background:rgba(88,101,242,.25);color:#fff;transform:translateY(-1px)}
+
+/* WRAP */
+.w{max-width:1360px;margin:0 auto;padding:0 clamp(12px,3vw,44px);position:relative;z-index:1}
+main{padding-top:56px}
+
+/* HERO */
+.hero{padding:70px 0 50px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(120,87,255,.1);border:1px solid rgba(120,87,255,.2);color:var(--a3);font-size:0.67rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:99px;margin-bottom:22px}
+.pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gr);box-shadow:0 0 8px var(--gr);animation:pulse 1.8s infinite}
+.hero h1{font-size:clamp(2rem,4.5vw,3.8rem);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:14px}
+.hero h1 .g{background:linear-gradient(110deg,var(--a) 0%,var(--a2) 40%,var(--gr) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--t2);font-size:0.93rem;max-width:440px;margin:0 auto 36px;line-height:1.7}
+.hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.h-btn-p{background:var(--a);border:none;color:#fff;padding:11px 24px;border-radius:10px;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;box-shadow:0 0 24px var(--ag);transition:all .2s}
+.h-btn-p:hover{background:#9070ff;transform:translateY(-2px);box-shadow:0 4px 30px var(--ag)}
+.h-btn-s{background:var(--s2);border:1px solid var(--b2);color:var(--t2);padding:11px 24px;border-radius:10px;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;transition:all .2s}
+.h-btn-s:hover{color:var(--t);border-color:rgba(255,255,255,.2);transform:translateY(-2px)}
+
+/* SEARCH */
+.srch-wrap{max-width:620px;margin:0 auto 12px;position:relative}
+.srch-wrap input{width:100%;padding:14px 46px 14px 46px;background:var(--bg3);border:1.5px solid var(--b2);border-radius:13px;color:var(--t);font-family:'JetBrains Mono',monospace;font-size:0.84rem;outline:none;transition:all .22s}
+.srch-wrap input::placeholder{color:var(--mu)}
+.srch-wrap input:focus{border-color:var(--a);background:var(--bg4);box-shadow:0 0 0 4px rgba(120,87,255,.1)}
+.si{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--mu);pointer-events:none}
+.clr{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--s2);border:none;color:var(--mu);width:24px;height:24px;border-radius:5px;font-size:0.8rem;display:none;align-items:center;justify-content:center;transition:all .15s}
+.clr.v{display:flex}
+.clr:hover{color:var(--t);background:var(--s3)}
+.snote{text-align:center;color:var(--mu);font-size:0.73rem;margin-bottom:24px;min-height:16px}
+
+/* STATS */
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.stat-box{background:var(--s);border:1px solid var(--b);border-radius:11px;padding:13px 22px;text-align:center;backdrop-filter:blur(8px)}
+.stat-n{font-size:1.4rem;font-weight:800;letter-spacing:-.8px}
+.stat-n.p{color:var(--a2)}.stat-n.g{color:var(--gr)}.stat-n.y{color:var(--yl)}.stat-n.b{color:var(--bl)}
+.stat-l{font-size:0.67rem;color:var(--mu);margin-top:2px;letter-spacing:.3px}
+
+/* RECS */
+.rec-wrap{margin-bottom:36px}
+.sec-label{font-size:0.8rem;font-weight:700;color:var(--a3);margin-bottom:12px;display:flex;align-items:center;gap:7px;letter-spacing:.2px}
+.rec-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.rec-row::-webkit-scrollbar{display:none}
+.rc{flex-shrink:0;width:168px;background:var(--bg2);border:1px solid var(--b);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .2s}
+.rc:hover{border-color:rgba(120,87,255,.35);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.rc-img{height:76px;display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative}
+.rc-body{padding:9px 10px}
+.rc-name{font-size:0.71rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-game{font-size:0.62rem;color:var(--mu);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-tag{display:inline-block;font-size:0.57rem;font-weight:800;text-transform:uppercase;letter-spacing:.4px;padding:2px 6px;border-radius:4px;margin-top:5px}
+
+/* FILTERS */
+.frow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+.ft{background:var(--s);border:1px solid var(--b);color:var(--mu);padding:5px 13px;border-radius:99px;font-size:0.72rem;font-weight:700;transition:all .15s;letter-spacing:.2px}
+.ft:hover{color:var(--t2);background:var(--s2)}
+.ft.on{background:var(--a);border-color:transparent;color:#fff}
+.sort-wrap{margin-left:auto}
+.ssel{background:var(--s);border:1px solid var(--b);color:var(--t2);padding:5px 12px;border-radius:8px;font-family:'Syne',sans-serif;font-size:0.72rem;outline:none;cursor:pointer}
+.ssel option{background:var(--bg2)}
+
+/* SEC HEAD */
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sh-t{font-size:0.95rem;font-weight:700}
+.sh-c{font-size:0.71rem;color:var(--mu)}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;margin-bottom:36px}
+
+/* CARD */
+.card{background:var(--bg2);border:1px solid var(--b);border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .22s,box-shadow .22s;display:flex;flex-direction:column;position:relative;opacity:0;transform:translateY(14px)}
+.card.visible{opacity:1;transform:none;transition:opacity .26s ease,transform .26s ease,border-color .2s,box-shadow .22s}
+.card:hover{border-color:rgba(120,87,255,.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.card-banner{height:88px;display:flex;align-items:center;justify-content:center;font-size:2.3rem;position:relative;overflow:hidden;flex-shrink:0}
+.card-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,.65))}
+.card-banner-label{position:absolute;bottom:7px;left:10px;font-size:0.59rem;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.6px;z-index:1}
+.card-body{padding:13px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card-name{font-size:0.88rem;font-weight:700;line-height:1.3}
+.card-sub{font-size:0.69rem;color:var(--mu);margin-top:2px}
+.card-sub b{color:var(--a3);font-weight:600}
+.badges{display:flex;gap:4px;flex-wrap:wrap}
+.badge{font-size:0.59rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:4px}
+.bf{background:var(--grd);color:var(--gr);border:1px solid rgba(15,217,152,.2)}
+.bp{background:var(--yld);color:var(--yl);border:1px solid rgba(245,166,35,.2)}
+.bv{background:rgba(120,87,255,.12);color:var(--a2);border:1px solid rgba(120,87,255,.22)}
+.codeblock{background:rgba(0,0,0,.4);border:1px solid var(--b);border-radius:8px;padding:8px 10px;font-family:'JetBrains Mono',monospace;font-size:0.64rem;color:#b5a0ff;line-height:1.6;max-height:54px;overflow:hidden;position:relative;white-space:pre;word-break:break-all}
+.codeblock::after{content:'';position:absolute;bottom:0;left:0;right:0;height:24px;background:linear-gradient(transparent,rgba(0,0,0,.4))}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.sts{display:flex;gap:9px}
+.st{display:flex;align-items:center;gap:2px;font-size:0.67rem;color:var(--mu)}
+.acts{display:flex;gap:5px}
+.btn-copy{background:rgba(120,87,255,.12);border:1px solid rgba(120,87,255,.2);color:var(--a2);padding:5px 12px;border-radius:7px;font-size:0.69rem;font-weight:700;transition:all .15s}
+.btn-copy:hover{background:var(--a);color:#fff;border-color:transparent}
+.btn-view{background:var(--s);border:1px solid var(--b);color:var(--mu);padding:5px 12px;border-radius:7px;font-size:0.69rem;font-weight:600;transition:all .15s}
+.btn-view:hover{color:var(--t);border-color:var(--b2)}
+.btn-like{display:flex;align-items:center;gap:3px;background:var(--s);border:1px solid var(--b);color:var(--mu);padding:5px 10px;border-radius:7px;font-size:0.69rem;font-weight:600;transition:all .18s}
+.btn-like:hover{color:var(--rd);border-color:rgba(255,92,92,.3);background:rgba(255,92,92,.07)}
+.btn-like.liked{background:rgba(255,92,92,.12);border-color:rgba(255,92,92,.3);color:var(--rd)}
+.btn-like.liked svg{fill:var(--rd)}
+@keyframes likePop{0%{transform:scale(1)}40%{transform:scale(1.4)}70%{transform:scale(.9)}100%{transform:scale(1)}}
+.btn-like.pop{animation:likePop .35s ease}
+.card-del{position:absolute;top:8px;right:8px;z-index:2;background:rgba(255,92,92,.15);border:1px solid rgba(255,92,92,.25);color:var(--rd);width:24px;height:24px;border-radius:6px;font-size:0.75rem;display:none;align-items:center;justify-content:center;transition:all .15s}
+.card-del:hover{background:rgba(255,92,92,.3)}
+.card:hover .card-del{display:flex}
+
+/* EMPTY */
+.empty{text-align:center;padding:70px 0;color:var(--mu)}
+.empty-icon{font-size:3rem;margin-bottom:14px;display:block}
+.empty-title{font-size:1rem;font-weight:700;margin-bottom:6px;color:var(--t2)}
+.empty-sub{font-size:0.82rem;line-height:1.6;max-width:300px;margin:0 auto 20px}
+.empty-btn{background:var(--a);border:none;color:#fff;padding:10px 22px;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer}
+
+/* PAGINATION */
+.pages{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;padding:4px 0 52px}
+.pg{background:var(--s);border:1px solid var(--b);color:var(--mu);min-width:32px;height:32px;border-radius:7px;font-size:0.78rem;display:flex;align-items:center;justify-content:center;transition:all .15s;padding:0 7px}
+.pg:hover{color:var(--t);background:var(--s2)}
+.pg.on{background:var(--a);border-color:transparent;color:#fff}
+.pg-sep{color:var(--mu);font-size:0.78rem;display:flex;align-items:center;height:32px;padding:0 3px}
+
+/* ADD MODAL */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(16px);z-index:500;display:none;align-items:center;justify-content:center;padding:16px}
+.ov.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--b2);border-radius:18px;width:100%;max-width:600px;max-height:93vh;overflow-y:auto;position:relative;animation:mIn .2s ease}
+@keyframes mIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:none}}
+.modal-head{padding:22px 22px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-title{font-size:1.1rem;font-weight:800;letter-spacing:-.3px}
+.mcl{background:var(--s2);border:1px solid var(--b);color:var(--mu);width:28px;height:28px;border-radius:7px;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.mcl:hover{color:var(--t);background:var(--s3)}
+.modal-body{padding:0 22px 22px;display:flex;flex-direction:column;gap:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:0.7rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px}
+.fg input,.fg select,.fg textarea{background:var(--bg3);border:1.5px solid var(--b);border-radius:9px;color:var(--t);font-family:'JetBrains Mono',monospace;font-size:0.82rem;padding:10px 13px;outline:none;transition:border-color .2s}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--mu)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--a);box-shadow:0 0 0 3px rgba(120,87,255,.1)}
+.fg select{font-family:'Syne',sans-serif;cursor:pointer}
+.fg select option{background:var(--bg2)}
+.fg textarea{resize:vertical;min-height:120px;line-height:1.6}
+.preview-wrap{background:var(--bg);border:1px solid var(--b);border-radius:9px;padding:12px;display:flex;gap:10px;align-items:center}
+.preview-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.preview-info{flex:1;min-width:0}
+.preview-name{font-size:0.85rem;font-weight:700}
+.preview-game{font-size:0.7rem;color:var(--mu);margin-top:2px}
+.form-actions{display:flex;gap:8px;justify-content:flex-end}
+.btn-submit{background:var(--a);border:none;color:#fff;padding:10px 22px;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;transition:all .2s;box-shadow:0 0 18px var(--ag)}
+.btn-submit:hover{background:#9070ff;transform:translateY(-1px)}
+.btn-cancel{background:var(--s2);border:1px solid var(--b);color:var(--t2);padding:10px 18px;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;transition:all .2s}
+.btn-cancel:hover{color:var(--t)}
+
+/* VIEW MODAL */
+.vm-banner{width:100%;height:110px;display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:12px;margin-bottom:14px}
+.vm-title{font-size:1.1rem;font-weight:800;letter-spacing:-.3px;margin-bottom:3px}
+.vm-game{font-size:0.76rem;color:var(--mu);margin-bottom:12px}
+.vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.vm-box{background:var(--s);border:1px solid var(--b);border-radius:8px;padding:9px 12px}
+.vm-box-l{font-size:0.61rem;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;font-weight:700}
+.vm-box-v{font-size:0.85rem;font-weight:700}
+.vm-desc{color:var(--t2);font-size:0.8rem;line-height:1.65;margin:10px 0}
+.vm-cl{font-size:0.61rem;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:5px}
+.vm-code{background:rgba(0,0,0,.5);border:1px solid var(--b);border-radius:9px;padding:13px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#b5a0ff;line-height:1.75;overflow:auto;max-height:220px;white-space:pre-wrap;word-break:break-all;margin-bottom:13px}
+.vm-acts{display:flex;gap:7px;flex-wrap:wrap}
+.bm{background:var(--a);border:none;color:#fff;padding:9px 20px;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;transition:all .2s;box-shadow:0 0 16px var(--ag)}
+.bm:hover{background:#9070ff;transform:translateY(-1px)}
+.bs{background:var(--s2);border:1px solid var(--b);color:var(--t2);padding:9px 18px;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:600;transition:all .2s}
+.bs:hover{color:var(--t)}
+.bs.vm-liked{background:rgba(255,92,92,.12);border-color:rgba(255,92,92,.3);color:var(--rd)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--gr);color:#030f09;padding:9px 22px;border-radius:99px;font-size:0.78rem;font-weight:800;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(15,217,152,.3)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--b);padding:26px 0;margin-top:20px}
+.fi{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.73rem;color:var(--mu)}
+.fl{display:flex;gap:16px}.fl a:hover{color:var(--t2)}
+
+/* RESPONSIVE */
+@media(max-width:860px){.nav-mid{display:none}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.vm-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.hero h1{letter-spacing:-1px}.stats{gap:7px}.stat-box{padding:10px 16px}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="goHome()">
+    <div class="logo-dot"></div>
+    CHRE<em>ATZ</em>
+  </div>
+  <div class="nav-mid">
+    <button class="ntab on" onclick="setTab(this,'all')">All Scripts</button>
+    <button class="ntab" onclick="setTab(this,'free')">Free</button>
+    <button class="ntab" onclick="setTab(this,'paid')">Paid</button>
+    <button class="ntab" onclick="setTab(this,'top')">Top Rated</button>
+    <button class="ntab" onclick="setTab(this,'new')">New</button>
+  </div>
+  <div class="nav-r">
+    <button class="add-btn" onclick="openAddModal()">+ Add Script</button>
+    <a href="https://discord.gg/z3rRHQ9jj" target="_blank" class="dbtn">
+      <svg width="14" height="11" viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.6.7a40.8 40.8 0 0 0-1.8 3.7 54.1 54.1 0 0 0-16.2 0A38.5 38.5 0 0 0 25.8.7 58.3 58.3 0 0 0 11.3 4.9C1.6 19.6-1 33.9.3 48.1a58.9 58.9 0 0 0 18 9.1 44.5 44.5 0 0 0 3.8-6.3 38.3 38.3 0 0 1-6-2.9l1.5-1.1a42 42 0 0 0 36 0l1.5 1.1a38.2 38.2 0 0 1-6 2.9 44.2 44.2 0 0 0 3.8 6.3 58.7 58.7 0 0 0 18-9.1C72.5 31.8 68.5 17.6 60.1 4.9ZM23.9 39.4c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.5 3.2 6.4 7.2 0 4-2.9 7.2-6.4 7.2Zm23.2 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.5 3.2 6.4 7.2 0 4-2.9 7.2-6.4 7.2Z"/></svg>
+      Discord
+    </a>
+  </div>
+</nav>
+
+<!-- ADD MODAL -->
+<div class="ov" id="add-ov" onclick="maybeCloseAdd(event)">
+  <div class="modal" id="add-modal">
+    <div class="modal-head">
+      <div class="modal-title">➕ Add Your Script</div>
+      <button class="mcl" onclick="closeAddModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="preview-wrap" id="preview">
+        <div class="preview-icon" id="prev-icon" style="background:#111">🎮</div>
+        <div class="preview-info">
+          <div class="preview-name" id="prev-name">Script Name</div>
+          <div class="preview-game" id="prev-game">Game Name</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Script Name *</label>
+          <input type="text" id="f-name" placeholder="e.g. Auto Farm v2" oninput="updatePreview()">
+        </div>
+        <div class="fg">
+          <label>Game Name *</label>
+          <input type="text" id="f-game" placeholder="e.g. Blox Fruits" oninput="updatePreview()">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Game Emoji</label>
+          <input type="text" id="f-emoji" placeholder="🎮" maxlength="4" oninput="updatePreview()" style="font-size:1.2rem">
+        </div>
+        <div class="fg">
+          <label>Type</label>
+          <select id="f-type">
+            <option value="free">Free</option>
+            <option value="paid">Paid</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <label>Executor</label>
+          <select id="f-exec">
+            <option>Any</option><option>KRNL</option><option>Fluxus</option><option>Synapse X</option>
+            <option>Delta</option><option>Arceus X</option><option>Hydrogen</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Banner Color</label>
+          <input type="color" id="f-color" value="#7857ff" style="height:42px;padding:4px;cursor:pointer">
+        </div>
+      </div>
+      <div class="fg">
+        <label>Script Code *</label>
+        <textarea id="f-code" placeholder="-- Paste your Lua script here&#10;loadstring(game:HttpGet('https://...'))()"></textarea>
+      </div>
+      <div class="fg">
+        <label>Description</label>
+        <input type="text" id="f-desc" placeholder="What does this script do?">
+      </div>
+      <div class="form-actions">
+        <button class="btn-cancel" onclick="closeAddModal()">Cancel</button>
+        <button class="btn-submit" onclick="submitScript()">✓ Add Script</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW MODAL -->
+<div class="ov" id="view-ov" onclick="maybeCloseView(event)">
+  <div class="modal" id="view-modal">
+    <div class="modal-head">
+      <div class="modal-title" id="vm-title-head">Script</div>
+      <button class="mcl" onclick="closeViewModal()">✕</button>
+    </div>
+    <div class="modal-body" id="vm-body"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<main>
+<div class="w">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="pill">Live Script Hub</div>
+    <h1>Your scripts,<br><span class="g">your hub.</span></h1>
+    <p>Add any Roblox script you have, search and copy instantly. Built by the community, for the community.</p>
+    <div class="hero-actions">
+      <button class="h-btn-p" onclick="openAddModal()">+ Add Your Script</button>
+      <button class="h-btn-s" onclick="document.getElementById('q').focus()">Browse Scripts</button>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="srch-wrap">
+    <svg class="si" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="q" placeholder="Search by name, game, executor, type…" oninput="onSearch(this)">
+    <button class="clr v" id="clr" onclick="clearSearch()" style="display:none">✕</button>
+  </div>
+  <div class="snote" id="snote"></div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-box"><div class="stat-n p" id="s-total">0</div><div class="stat-l">Total Scripts</div></div>
+    <div class="stat-box"><div class="stat-n g" id="s-free">0</div><div class="stat-l">Free Scripts</div></div>
+    <div class="stat-box"><div class="stat-n y" id="s-games">0</div><div class="stat-l">Games</div></div>
+    <div class="stat-box"><div class="stat-n b" id="s-copies">0</div><div class="stat-l">Times Copied</div></div>
+  </div>
+
+  <!-- RECS -->
+  <div id="rec-wrap" class="rec-wrap">
+    <div class="sec-label">✨ Recommended</div>
+    <div class="rec-row" id="rec-row"></div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="frow">
+    <button class="ft on" onclick="setFilter(this,'all')">All</button>
+    <button class="ft" onclick="setFilter(this,'free')">Free</button>
+    <button class="ft" onclick="setFilter(this,'paid')">Paid</button>
+    <button class="ft" onclick="setFilter(this,'verified')">✓ Verified</button>
+    <div class="sort-wrap">
+      <select class="ssel" id="ssel" onchange="applyAll()">
+        <option value="new">Newest First</option>
+        <option value="popular">Most Copied</option>
+        <option value="likes">Most Liked</option>
+        <option value="views">Most Viewed</option>
+        <option value="az">A–Z</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="sh">
+    <span class="sh-t" id="sh-t">All Scripts</span>
+    <span class="sh-c" id="sh-c"></span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="empty" id="empty-state" style="display:none">
+    <span class="empty-icon" id="empty-icon">📭</span>
+    <div class="empty-title" id="empty-title">No scripts yet</div>
+    <div class="empty-sub" id="empty-sub">Be the first to add a script!</div>
+    <button class="empty-btn" id="empty-btn" onclick="openAddModal()">+ Add Your First Script</button>
+  </div>
+
+  <div class="pages" id="pages"></div>
+</div>
+</main>
+
+<footer>
+  <div class="w">
+    <div class="fi">
+      <span>© 2025 <b>CHREATZ</b> — Community Script Hub</span>
+      <div class="fl">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="https://discord.gg/z3rRHQ9jj" target="_blank">Discord</a>
+        <a href="#">Report</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── STORAGE ──
+const STORE_KEY  = 'chreatz_scripts_v2';
+const COPY_KEY   = 'chreatz_copies';
+const LIKE_KEY   = 'chreatz_likes';
+const MYLIKE_KEY = 'chreatz_mylikes';
+
+function loadScripts(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY))||[]; }catch(_){ return []; } }
+function saveScripts(arr){ localStorage.setItem(STORE_KEY, JSON.stringify(arr)); }
+function getCopies(){ try{ return JSON.parse(localStorage.getItem(COPY_KEY))||{}; }catch(_){ return {}; } }
+function saveCopies(obj){ localStorage.setItem(COPY_KEY, JSON.stringify(obj)); }
+function getLikes(){ try{ return JSON.parse(localStorage.getItem(LIKE_KEY))||{}; }catch(_){ return {}; } }
+function saveLikesStore(obj){ localStorage.setItem(LIKE_KEY, JSON.stringify(obj)); }
+function getMyLikes(){ try{ return JSON.parse(localStorage.getItem(MYLIKE_KEY))||{}; }catch(_){ return {}; } }
+function saveMyLikes(obj){ localStorage.setItem(MYLIKE_KEY, JSON.stringify(obj)); }
+
+let scripts  = loadScripts();
+let copies   = getCopies();
+let likes    = getLikes();
+let myLikes  = getMyLikes();
+let filtered = [], curFilter='all', curSearch='', curPage=1;
+const PER = 24;
+
+// ── HELPERS ──
+function fmt(n){ return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(1)+'K':String(n) }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7) }
+function hexToRgb(hex){ const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return `${r},${g},${b}`; }
+
+// ── STATS ──
+function updateStats(){
+  document.getElementById('s-total').textContent = scripts.length;
+  document.getElementById('s-free').textContent  = scripts.filter(s=>s.type==='free').length;
+  document.getElementById('s-games').textContent = new Set(scripts.map(s=>s.game.trim().toLowerCase())).size;
+  document.getElementById('s-copies').textContent = fmt(Object.values(copies).reduce((a,b)=>a+b,0));
+}
+
+// ── RECS ──
+function buildRecs(){
+  const recWrap = document.getElementById('rec-wrap');
+  if(!scripts.length){ recWrap.style.display='none'; return; }
+  recWrap.style.display='block';
+  const top = [...scripts].sort((a,b)=>(copies[b.id]||0)-(copies[a.id]||0)).slice(0,12);
+  const row = document.getElementById('rec-row');
+  row.innerHTML='';
+  top.forEach(s=>{
+    const rgb = hexToRgb(s.color||'#7857ff');
+    const cls = s.type==='free'?'bf':'bp';
+    const d = document.createElement('div');
+    d.className='rc';
+    d.innerHTML=`<div class="rc-img" style="background:linear-gradient(135deg,rgba(${rgb},.3),rgba(${rgb},.55))">${esc(s.emoji||'🎮')}</div>
+    <div class="rc-body">
+      <div class="rc-name">${esc(s.name)}</div>
+      <div class="rc-game">${esc(s.game)}</div>
+      <span class="badge ${cls} rc-tag">${s.type}</span>
+    </div>`;
+    d.onclick=()=>openViewModal(s.id);
+    row.appendChild(d);
+  });
+}
+
+// ── APPLY ──
+function applyAll(){
+  const sort = document.getElementById('ssel').value;
+  let d = [...scripts];
+
+  if(curFilter==='free')     d=d.filter(s=>s.type==='free');
+  else if(curFilter==='paid') d=d.filter(s=>s.type==='paid');
+  else if(curFilter==='verified') d=d.filter(s=>s.verified);
+
+  if(curSearch){
+    const q = curSearch.toLowerCase();
+    d = d.filter(s=>
+      s.name.toLowerCase().includes(q)||
+      s.game.toLowerCase().includes(q)||
+      (s.exec||'').toLowerCase().includes(q)||
+      s.type.toLowerCase().includes(q)||
+      (s.desc||'').toLowerCase().includes(q)
+    );
+  }
+
+  if(sort==='popular') d=[...d].sort((a,b)=>(copies[b.id]||0)-(copies[a.id]||0));
+  else if(sort==='likes')   d=[...d].sort((a,b)=>(likes[b.id]||0)-(likes[a.id]||0));
+  else if(sort==='views')  d=[...d].sort((a,b)=>(b.views||0)-(a.views||0));
+  else if(sort==='az')     d=[...d].sort((a,b)=>a.name.localeCompare(b.name));
+  else d=[...d].reverse();
+
+  filtered=d; curPage=1; render();
+}
+
+// ── RENDER ──
+function render(){
+  const grid  = document.getElementById('grid');
+  const empty = document.getElementById('empty-state');
+  const pDiv  = document.getElementById('pages');
+  const shc   = document.getElementById('sh-c');
+
+  if(!filtered.length){
+    grid.innerHTML=''; pDiv.innerHTML=''; shc.textContent='';
+    empty.style.display='block';
+    if(curSearch){
+      document.getElementById('empty-icon').textContent='🔍';
+      document.getElementById('empty-title').textContent='No results found';
+      document.getElementById('empty-sub').textContent=`No scripts match "${curSearch}".`;
+      document.getElementById('empty-btn').textContent='Clear Search';
+      document.getElementById('empty-btn').onclick=clearSearch;
+    } else if(!scripts.length){
+      document.getElementById('empty-icon').textContent='📭';
+      document.getElementById('empty-title').textContent='No scripts yet';
+      document.getElementById('empty-sub').textContent='Add your first script!';
+      document.getElementById('empty-btn').textContent='+ Add Script';
+      document.getElementById('empty-btn').onclick=openAddModal;
+    } else {
+      document.getElementById('empty-icon').textContent='📂';
+      document.getElementById('empty-title').textContent='No scripts in this category';
+      document.getElementById('empty-sub').textContent='Try a different filter.';
+      document.getElementById('empty-btn').textContent='Show All';
+      document.getElementById('empty-btn').onclick=()=>setFilter(document.querySelector('.ft'),'all');
+    }
+    return;
+  }
+
+  empty.style.display='none';
+  const total = filtered.length;
+  const pages = Math.ceil(total/PER);
+  if(curPage>pages) curPage=1;
+  const slice = filtered.slice((curPage-1)*PER, curPage*PER);
+  shc.textContent = `${total} script${total!==1?'s':''}`;
+
+  grid.innerHTML='';
+  slice.forEach((s,i)=>{
+    const el  = document.createElement('div');
+    el.className='card';
+    const rgb = hexToRgb(s.color||'#7857ff');
+    const tb  = s.type==='free'?'<span class="badge bf">Free</span>':'<span class="badge bp">Paid</span>';
+    const vb  = s.verified?'<span class="badge bv">✓ Verified</span>':'';
+    const likedClass = myLikes[s.id]?' liked':'';
+    const likedFill  = myLikes[s.id]?'currentColor':'none';
+
+    el.innerHTML=
+      `<button class="card-del" title="Delete" onclick="event.stopPropagation();deleteScript('${s.id}')">✕</button>
+       <div class="card-banner" style="background:linear-gradient(135deg,rgba(${rgb},.28),rgba(${rgb},.58))">
+         <span style="font-size:2.3rem;position:relative;z-index:1">${esc(s.emoji||'🎮')}</span>
+         <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,.6))"></div>
+         <div class="card-banner-label">${esc(s.game)}</div>
+       </div>
+       <div class="card-body">
+         <div>
+           <div class="card-name">${esc(s.name)}</div>
+           <div class="card-sub">🎮 <b>${esc(s.game)}</b> · ${esc(s.exec||'Any')}</div>
+         </div>
+         <div class="badges">${tb}${vb}</div>
+         <div class="codeblock">${esc(s.code||'')}</div>
+         <div class="card-foot">
+           <div class="sts">
+             <span class="st">
+               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+               ${fmt(copies[s.id]||0)}
+             </span>
+           </div>
+           <div class="acts">
+             <button class="btn-like${likedClass}" onclick="event.stopPropagation();doLike('${s.id}',this)">
+               <svg width="10" height="10" viewBox="0 0 24 24" fill="${likedFill}" stroke="currentColor" stroke-width="2.3"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+               ${fmt(likes[s.id]||0)}
+             </button>
+             <button class="btn-copy" onclick="event.stopPropagation();doCopy(event,'${s.id}')">Copy</button>
+             <button class="btn-view" onclick="event.stopPropagation();openViewModal('${s.id}')">View</button>
+           </div>
+         </div>
+       </div>`;
+
+    el.onclick=()=>openViewModal(s.id);
+    grid.appendChild(el);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      el.style.transition=`opacity .26s ${i*.022}s ease, transform .26s ${i*.022}s ease, border-color .2s, box-shadow .22s`;
+      el.classList.add('visible');
+    }));
+  });
+
+  // Pagination
+  pDiv.innerHTML='';
+  if(pages<=1) return;
+  const mk=(lbl,pg,cls='')=>{
+    const b=document.createElement('button');
+    b.className='pg'+(cls?' '+cls:'');
+    b.textContent=lbl;
+    b.onclick=()=>{ curPage=pg; render(); window.scrollTo({top:0,behavior:'smooth'}); };
+    pDiv.appendChild(b);
+  };
+  const sep=()=>{ const s=document.createElement('span'); s.className='pg-sep'; s.textContent='…'; pDiv.appendChild(s); };
+  mk('‹', Math.max(1,curPage-1));
+  const st=Math.max(1,curPage-2), en=Math.min(pages,curPage+2);
+  if(st>1){ mk(1,1); if(st>2) sep(); }
+  for(let p=st;p<=en;p++) mk(p,p,p===curPage?'on':'');
+  if(en<pages){ if(en<pages-1) sep(); mk(pages,pages); }
+  mk('›', Math.min(pages,curPage+1));
+}
+
+// ── SEARCH ──
+function onSearch(inp){
+  curSearch = inp.value.trim();
+  document.getElementById('clr').style.display = curSearch?'flex':'none';
+  document.getElementById('snote').textContent  = curSearch?`Showing results for "${curSearch}"` : '';
+  document.getElementById('rec-wrap').style.display = curSearch?'none':(scripts.length?'block':'none');
+  applyAll();
+}
+function clearSearch(){
+  document.getElementById('q').value='';
+  curSearch='';
+  document.getElementById('clr').style.display='none';
+  document.getElementById('snote').textContent='';
+  document.getElementById('rec-wrap').style.display = scripts.length?'block':'none';
+  applyAll();
+}
+
+// ── FILTER ──
+function setFilter(btn,val){
+  curFilter=val;
+  document.querySelectorAll('.ft').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const lbl={all:'All Scripts',free:'Free Scripts',paid:'Paid Scripts',verified:'Verified Scripts'};
+  document.getElementById('sh-t').textContent = lbl[val]||'Scripts';
+  applyAll();
+}
+
+// ── TABS ──
+function setTab(btn,val){
+  document.querySelectorAll('.ntab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const map={all:'all',free:'free',paid:'paid',top:'verified',new:'all'};
+  curFilter=map[val]||'all';
+  const sorts={top:'popular',new:'new',all:'new',free:'new',paid:'new'};
+  document.getElementById('ssel').value = sorts[val]||'new';
+  const lbl={all:'All Scripts',free:'Free Scripts',paid:'Paid Scripts',top:'Top Rated',new:'New Scripts'};
+  document.getElementById('sh-t').textContent = lbl[val]||'Scripts';
+  document.querySelectorAll('.ft').forEach(b=>b.classList.remove('on'));
+  if(val!=='top') document.querySelector('.ft').classList.add('on');
+  applyAll();
+}
+
+function goHome(){
+  curFilter='all'; curSearch='';
+  document.getElementById('q').value='';
+  document.getElementById('clr').style.display='none';
+  document.getElementById('snote').textContent='';
+  document.getElementById('ssel').value='new';
+  document.getElementById('sh-t').textContent='All Scripts';
+  document.getElementById('rec-wrap').style.display = scripts.length?'block':'none';
+  document.querySelectorAll('.ntab').forEach((b,i)=>b.classList.toggle('on',i===0));
+  document.querySelectorAll('.ft').forEach((b,i)=>b.classList.toggle('on',i===0));
+  applyAll();
+}
+
+// ── COPY ──
+function doCopy(e, id){
+  const s = scripts.find(x=>x.id===id);
+  if(!s) return;
+  try{ navigator.clipboard.writeText(s.code); }catch(_){}
+  copies[id] = (copies[id]||0)+1;
+  saveCopies(copies);
+  updateStats();
+  const btn=e.currentTarget, orig=btn.textContent;
+  btn.textContent='✓ Done!';
+  btn.style.cssText='background:rgba(15,217,152,.18);color:var(--gr);border-color:rgba(15,217,152,.28)';
+  setTimeout(()=>{ btn.textContent=orig; btn.style.cssText=''; }, 1600);
+  showToast('Script copied!');
+}
+
+// ── LIKE ──
+function doLike(id, btn){
+  if(myLikes[id]){
+    myLikes[id]=false;
+    likes[id]=Math.max(0,(likes[id]||1)-1);
+  } else {
+    myLikes[id]=true;
+    likes[id]=(likes[id]||0)+1;
+  }
+  saveLikesStore(likes);
+  saveMyLikes(myLikes);
+
+  if(btn){
+    const liked=myLikes[id];
+    btn.classList.toggle('liked', liked);
+    btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop');
+    const svg=btn.querySelector('svg');
+    if(svg) svg.setAttribute('fill', liked?'currentColor':'none');
+    // update count text (last text node)
+    const nodes=[...btn.childNodes];
+    const textNode=nodes.find(n=>n.nodeType===3&&n.textContent.trim());
+    if(textNode) textNode.textContent=fmt(likes[id]||0);
+  }
+  showToast(myLikes[id]?'❤️ Liked!':'💔 Unliked');
+}
+
+// ── DELETE ──
+function deleteScript(id){
+  if(!confirm('Delete this script?')) return;
+  scripts = scripts.filter(s=>s.id!==id);
+  delete copies[id];
+  delete likes[id];
+  saveScripts(scripts);
+  saveCopies(copies);
+  saveLikesStore(likes);
+  updateStats(); buildRecs(); applyAll();
+  showToast('Script deleted.');
+}
+
+// ── ADD MODAL ──
+function openAddModal(){
+  document.getElementById('add-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeAddModal(){
+  document.getElementById('add-ov').classList.remove('open');
+  document.body.style.overflow='';
+}
+function maybeCloseAdd(e){ if(e.target===document.getElementById('add-ov')) closeAddModal(); }
+
+function updatePreview(){
+  const name  = document.getElementById('f-name').value||'Script Name';
+  const game  = document.getElementById('f-game').value||'Game Name';
+  const emoji = document.getElementById('f-emoji').value||'🎮';
+  const color = document.getElementById('f-color').value||'#7857ff';
+  const rgb   = hexToRgb(color);
+  document.getElementById('prev-name').textContent = name;
+  document.getElementById('prev-game').textContent = game;
+  document.getElementById('prev-icon').textContent = emoji;
+  document.getElementById('prev-icon').style.background = `linear-gradient(135deg,rgba(${rgb},.3),rgba(${rgb},.6))`;
+}
+
+function submitScript(){
+  const name  = document.getElementById('f-name').value.trim();
+  const game  = document.getElementById('f-game').value.trim();
+  const code  = document.getElementById('f-code').value.trim();
+  if(!name||!game||!code){ showToast('Please fill in Name, Game and Code!'); return; }
+  scripts.push({
+    id:uid(), name, game,
+    emoji:  document.getElementById('f-emoji').value.trim()||'🎮',
+    color:  document.getElementById('f-color').value||'#7857ff',
+    type:   document.getElementById('f-type').value,
+    exec:   document.getElementById('f-exec').value,
+    code,
+    desc:   document.getElementById('f-desc').value.trim(),
+    verified: false,
+    addedAt: Date.now(),
+    views: Math.floor(Math.random()*200)+1
+  });
+  saveScripts(scripts);
+  updateStats(); buildRecs(); applyAll();
+  closeAddModal();
+  showToast('Script added! ✓');
+  ['f-name','f-game','f-emoji','f-code','f-desc'].forEach(id=>{ document.getElementById(id).value=''; });
+  document.getElementById('f-color').value='#7857ff';
+  document.getElementById('f-type').value='free';
+  document.getElementById('f-exec').value='Any';
+  updatePreview();
+}
+
+// ── VIEW MODAL ──
+function openViewModal(id){
+  const s = scripts.find(x=>x.id===id);
+  if(!s) return;
+  const rgb = hexToRgb(s.color||'#7857ff');
+  const tb  = s.type==='free'?'<span class="badge bf">Free</span>':'<span class="badge bp">Paid</span>';
+  const vb  = s.verified?'<span class="badge bv">✓ Verified</span>':'';
+  const likedClass = myLikes[s.id]?' vm-liked':'';
+  const likedTxt   = myLikes[s.id]?'Liked':'Like';
+
+  document.getElementById('vm-title-head').textContent=s.name;
+  document.getElementById('vm-body').innerHTML=
+    `<div class="vm-banner" style="background:linear-gradient(135deg,rgba(${rgb},.3),rgba(${rgb},.6))">${esc(s.emoji||'🎮')}</div>
+     <div class="vm-title">${esc(s.name)}</div>
+     <div class="vm-game">🎮 ${esc(s.game)} · ${esc(s.exec||'Any')}</div>
+     <div class="badges" style="margin-bottom:10px">${tb}${vb}</div>
+     <div class="vm-grid">
+       <div class="vm-box"><div class="vm-box-l">Copies</div><div class="vm-box-v">${fmt(copies[s.id]||0)}</div></div>
+       <div class="vm-box"><div class="vm-box-l">Likes</div><div class="vm-box-v" style="color:var(--rd)">❤️ ${fmt(likes[s.id]||0)}</div></div>
+       <div class="vm-box"><div class="vm-box-l">Executor</div><div class="vm-box-v">${esc(s.exec||'Any')}</div></div>
+       <div class="vm-box"><div class="vm-box-l">Type</div><div class="vm-box-v" style="text-transform:capitalize">${s.type}</div></div>
+     </div>
+     ${s.desc?`<div class="vm-desc">${esc(s.desc)}</div>`:''}
+     <div class="vm-cl">Script Code</div>
+     <div class="vm-code" id="vm-code-block">${esc(s.code||'')}</div>
+     <div class="vm-acts">
+       <button class="bm" id="vm-copy-btn">📋 Copy Script</button>
+       <button class="bs${likedClass}" id="vm-like-btn">❤️ ${likedTxt} <span id="vm-like-cnt">${fmt(likes[s.id]||0)}</span></button>
+       <a href="https://discord.gg/z3rRHQ9jj" target="_blank"><button class="bs">💬 Discord</button></a>
+       <button class="bs" onclick="closeViewModal()">Close</button>
+     </div>`;
+
+  document.getElementById('view-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+
+  document.getElementById('vm-copy-btn').onclick=()=>copyFromView(s.id, document.getElementById('vm-copy-btn'));
+  document.getElementById('vm-like-btn').onclick=()=>{
+    doLike(s.id, null);
+    const btn=document.getElementById('vm-like-btn');
+    const cnt=document.getElementById('vm-like-cnt');
+    if(btn){ btn.classList.toggle('vm-liked',!!myLikes[s.id]); btn.innerHTML=`❤️ ${myLikes[s.id]?'Liked':'Like'} <span id="vm-like-cnt">${fmt(likes[s.id]||0)}</span>`; }
+  };
+}
+
+function closeViewModal(){
+  document.getElementById('view-ov').classList.remove('open');
+  document.body.style.overflow='';
+}
+function maybeCloseView(e){ if(e.target===document.getElementById('view-ov')) closeViewModal(); }
+
+function copyFromView(id, btn){
+  const s=scripts.find(x=>x.id===id); if(!s) return;
+  try{ navigator.clipboard.writeText(s.code); }catch(_){}
+  copies[id]=(copies[id]||0)+1; saveCopies(copies); updateStats();
+  const o=btn.textContent; btn.textContent='✓ Copied!'; btn.style.cssText='background:var(--gr);color:#030f09;box-shadow:none';
+  setTimeout(()=>{ btn.textContent=o; btn.style.cssText=''; }, 1600);
+  showToast('Script copied!');
+}
+
+// ── TOAST ──
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent='✓ '+msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.classList.remove('show'), 2100);
+}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeAddModal(); closeViewModal(); }
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault(); document.getElementById('q').focus();
+  }
+});
+
+// ── INIT ──
+updateStats();
+buildRecs();
+applyAll();
+</script>
+
+</body>
+</html>
